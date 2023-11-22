@@ -19,9 +19,39 @@ public class Service {
     @OneToMany(mappedBy="service",fetch = FetchType.EAGER)
     private Set<Incident> incidents=new HashSet<>();
 
-    public Set<Incident> getIncidents(){
-        /*puede obtener todos los incidentes a partir de sus clientes*/
-        return new HashSet<>();
+    public Service() {
+    }
+
+    public Service(String name) {
+        this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<ClientService> getClients() {
+        return clients;
+    }
+
+    public void setClients(Set<ClientService> clients) {
+        this.clients = clients;
+    }
+
+    public Set<Incident> getIncidents() {
+        return incidents;
+    }
+
+    public void setIncidents(Set<Incident> incidents) {
+        this.incidents = incidents;
     }
 
     public void addClient(ClientService clientService){
