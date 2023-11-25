@@ -13,11 +13,11 @@ public class Service {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
     private String name;
-    @OneToMany(mappedBy="service",fetch = FetchType.EAGER)
+   /* @OneToMany(mappedBy="service",fetch = FetchType.EAGER)
     private Set<ClientService> clients=new HashSet<>();
 
     @OneToMany(mappedBy="service",fetch = FetchType.EAGER)
-    private Set<Incident> incidents=new HashSet<>();
+    private Set<Incident> incidents=new HashSet<>();*/
 
     public Service() {
     }
@@ -38,7 +38,7 @@ public class Service {
         this.name = name;
     }
 
-    public Set<ClientService> getClients() {
+   /* public Set<ClientService> getClients() {
         return clients;
     }
 
@@ -62,5 +62,13 @@ public class Service {
     public void addIncident(Incident incident){
         incident.setService(this);
         this.incidents.add(incident);
+    }*/
+
+    @Override
+    public String toString() {
+        return "Service{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
