@@ -1,7 +1,6 @@
 package com.sistemaIncidentes.controllers;
 
 import com.sistemaIncidentes.models.Client;
-import com.sistemaIncidentes.models.ClientService;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
