@@ -16,7 +16,7 @@ public class Technician {
     private String email;
 
     @OneToMany(mappedBy="technician",fetch = FetchType.EAGER)
-    private Set<Incident> incidents=new HashSet<>();
+    private Set<Incident> incidentsSolved=new HashSet<>();
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="speciality_id")
@@ -51,13 +51,13 @@ public class Technician {
         this.email = email;
     }
 
-    public Set<Incident> getIncidents() {
+    /*public Set<Incident> getIncidents() {
         return incidents;
-    }
+    }*/
 
-    public void setIncidents(Set<Incident> incidents) {
+    /*public void setIncidents(Set<Incident> incidents) {
         this.incidents = incidents;
-    }
+    }*/
 
     public Speciality getSpeciality() {
         return speciality;
@@ -67,8 +67,8 @@ public class Technician {
         this.speciality = speciality;
     }
 
-    public void addIncident(Incident incident){
+    /*public void addIncident(Incident incident){
         incident.setTechnician(this);
         this.incidents.add(incident);
-    }
+    }*/
 }

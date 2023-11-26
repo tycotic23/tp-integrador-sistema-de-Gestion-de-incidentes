@@ -1,6 +1,7 @@
 package com.sistemaIncidentes.controllers;
 
 import com.sistemaIncidentes.models.Client;
+import com.sistemaIncidentes.models.ClientService;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class ClientController {
 
-    public String createClient(String businessName, String CUIT, String email){
+    public void createClient(String businessName, String CUIT, String email){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -20,15 +21,15 @@ public class ClientController {
             session.persist(client);
             session.getTransaction().commit();
             sessionFactory.close();
-            return "successfully created";
+            System.out.println( "successfully created");
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "Error in creation of client";
+        System.out.println( "Error in creation of client");
 
     }
 
-    public String deleteClient(long id){
+    public void deleteClient(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -38,14 +39,14 @@ public class ClientController {
             session.remove(client);
             session.getTransaction().commit();
             sessionFactory.close();
-            return "successfully removed";
+            System.out.println( "successfully removed");
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "Error deleting client";
+        System.out.println( "Error deleting client");
     }
 
-    public String updateClient(long id,String businessName, String CUIT, String email){
+    public void updateClient(long id,String businessName, String CUIT, String email){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -58,14 +59,32 @@ public class ClientController {
             session.persist(client);
             session.getTransaction().commit();
             sessionFactory.close();
+            System.out.println( "successfully updated");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println( "Error updating client");
+    }
+
+    /*public void addServiceToClient(long id,ClientService clientService){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            Client client = session.get(Client.class,id);
+            client.addService(clientService);
+            //session.persist(client);
+            session.getTransaction().commit();
+            sessionFactory.close();
             return "successfully updated";
         }catch (Exception e){
             e.printStackTrace();
         }
         return "Error updating client";
-    }
+    }*/
 
-    public String getClient(long id){
+    public Client getClient(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -74,14 +93,16 @@ public class ClientController {
             Client client = session.get(Client.class,id);
             session.getTransaction().commit();
             sessionFactory.close();
-            return "Client "+id+": "+client.toString();
+            return client;
         }catch (Exception e){
             e.printStackTrace();
+
         }
-        return "Error updating client";
+        System.out.println( "Error updating client");
+        return null;
     }
 
-    public String getAllClient(){
+    public List<Client> getAllClient(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -90,17 +111,19 @@ public class ClientController {
             CriteriaQuery <Client> cq=session.getCriteriaBuilder().createQuery(Client.class);
             cq.from(Client.class);
             List<Client> clients=session.createQuery(cq).getResultList();
-            for (Client c:clients){
+            /*for (Client c:clients){
                 System.out.println("Client ID: "+c.getId());
                 System.out.println("Email: "+c.getEmail());
                 System.out.println("Business Name: "+c.getBusinessName());
                 System.out.println("CUIT: "+c.getCUIT());
-            }
+            }*/
             sessionFactory.close();
+            return clients;
         }catch (Exception e){
             e.printStackTrace();
-            return "Error reading clients";
+            System.out.println( "Error reading clients");
         }
-        return "Finished client list";
+        System.out.println( "Finished client list");
+        return null;
     }
 }

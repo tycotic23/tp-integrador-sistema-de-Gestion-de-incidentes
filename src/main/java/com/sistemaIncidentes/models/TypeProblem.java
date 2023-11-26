@@ -14,6 +14,7 @@ public class TypeProblem {
     private long id;
 
     private double maxTime;
+    private double estimatedTime;
 
     private String name;
 
@@ -27,9 +28,10 @@ public class TypeProblem {
     public TypeProblem() {
     }
 
-    public TypeProblem(double maxTime, String name) {
+    public TypeProblem(double maxTime, String name,double estimatedTime) {
         this.maxTime = maxTime;
         this.name = name;
+        this.estimatedTime=estimatedTime;
     }
 
     public long getId() {
@@ -66,6 +68,14 @@ public class TypeProblem {
 
     public void setSpecialities(Set<SpecialityTypeProblem> specialities) {
         this.specialities = specialities;
+    }
+
+    public double getEstimatedTime() {
+        return estimatedTime;
+    }
+
+    public void setEstimatedTime(double estimatedTime) {
+        this.estimatedTime = estimatedTime;
     }
 
     public void addTypeProblem(SpecialityTypeProblem typeProblem){

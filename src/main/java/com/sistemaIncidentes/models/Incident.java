@@ -3,6 +3,7 @@ package com.sistemaIncidentes.models;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,10 +15,10 @@ public class Incident {
     @GenericGenerator(name = "native", strategy = "native")
     private long id;
 
-    private IncidentState incidentState=new IncidentPending();
+    //private IncidentState incidentState=new IncidentPending();
 
-    @OneToMany(mappedBy="incident",fetch = FetchType.EAGER)
-    private Set<Problem> problems=new HashSet<>();
+    /*@OneToMany(mappedBy="incident",fetch = FetchType.EAGER)
+    private Set<Problem> problems=new HashSet<>();*/
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="service_id")
@@ -27,11 +28,12 @@ public class Incident {
     @JoinColumn(name="client_id")
     private Client client;
 
-    @ManyToOne(fetch=FetchType.EAGER)
+    /*@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="technician_id")
-    private Technician technician;
+    private Technician technician;*/
 
     public Incident() {
+
     }
 
 
@@ -56,23 +58,23 @@ public class Incident {
         this.client = client;
     }
 
-    public Technician getTechnician() {
+    /*public Technician getTechnician() {
         return technician;
     }
 
     public void setTechnician(Technician technician) {
         this.technician = technician;
-    }
+    }*/
 
-    public Set<Problem> getProblems() {
+    /*public Set<Problem> getProblems() {
         return problems;
     }
 
     public void setProblems(Set<Problem> problems) {
         this.problems = problems;
-    }
+    }*/
 
-    public IncidentState getIncidentState() {
+    /*public IncidentState getIncidentState() {
         return incidentState;
     }
 
@@ -84,15 +86,15 @@ public class Incident {
     public void addProblem(Problem problem) {
         problem.setIncident(this);
         this.problems.add(problem);
-    }
+    }*/
 
-    public double getTime(){
+    /*public double getTime(){
         return this.incidentState.getTime();
     }
 
     public void closeIncident(double timeInHours){
         this.incidentState.close(timeInHours);
-    }
+    }*/
 
 
 }

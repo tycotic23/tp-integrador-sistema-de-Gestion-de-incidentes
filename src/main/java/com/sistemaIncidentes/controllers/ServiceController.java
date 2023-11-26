@@ -10,7 +10,7 @@ import java.util.List;
 
 public class ServiceController {
 
-    public String createService(String name){
+    public void createService(String name){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Service.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -20,15 +20,15 @@ public class ServiceController {
             session.persist(service);
             session.getTransaction().commit();
             sessionFactory.close();
-            return "successfully created";
+            System.out.println( "successfully created");
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "Error in creation of service";
+        System.out.println( "Error in creation of service");
 
     }
 
-    public String deleteService(long id){
+    public void deleteService(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Service.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -38,14 +38,14 @@ public class ServiceController {
             session.remove(service);
             session.getTransaction().commit();
             sessionFactory.close();
-            return "successfully removed";
+            System.out.println( "successfully removed");
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "Error deleting service";
+        System.out.println( "Error deleting service");
     }
 
-    public String updateService(long id,String name){
+    public void updateService(long id,String name){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Service.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -56,14 +56,14 @@ public class ServiceController {
             session.persist(service);
             session.getTransaction().commit();
             sessionFactory.close();
-            return "successfully updated";
+            System.out.println(  "successfully updated");
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "Error updating service";
+        System.out.println(  "Error updating service");
     }
 
-    public String getService(long id){
+    public Service getService(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Service.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -72,14 +72,15 @@ public class ServiceController {
             Service service = session.get(Service.class,id);
             session.getTransaction().commit();
             sessionFactory.close();
-            return "Service "+id+": "+service.toString();
+            return service;
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "Error updating service";
+        System.out.println(  "Error updating service");
+        return null;
     }
 
-    public String getAllService(){
+    public List<Service> getAllService(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Service.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -88,15 +89,17 @@ public class ServiceController {
             CriteriaQuery<Service> cq=session.getCriteriaBuilder().createQuery(Service.class);
             cq.from(Service.class);
             List<Service> services=session.createQuery(cq).getResultList();
-            for (Service c:services){
+            /*for (Service c:services){
                 System.out.println("Service ID: "+c.getId());
                 System.out.println("Name: "+c.getName());
-            }
+            }*/
             sessionFactory.close();
+            return services;
         }catch (Exception e){
             e.printStackTrace();
-            return "Error reading services";
+            System.out.println(  "Error reading services");
         }
-        return "Finished service list";
+        System.out.println(  "Finished service list");
+        return null;
     }
 }
