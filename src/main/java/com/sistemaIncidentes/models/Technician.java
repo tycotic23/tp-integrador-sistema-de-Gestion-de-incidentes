@@ -73,6 +73,11 @@ public class Technician {
         return specialities;
     }
 
+    public Set<Speciality> getSpecialitiesList() {
+        //obtengo las especialidades a partir del objeto intermedio SpecialityTechnician
+        return specialities.stream().map(SpecialityTechnician::getSpeciality).collect(Collectors.toSet());
+    }
+
     public void setSpecialities(Set<SpecialityTechnician> specialities) {
         this.specialities = specialities;
     }

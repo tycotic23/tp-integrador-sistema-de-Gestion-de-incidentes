@@ -9,6 +9,7 @@ import com.sistemaIncidentes.models.Speciality;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class MenuRRHH implements Menu{
 
@@ -66,10 +67,11 @@ public class MenuRRHH implements Menu{
             case 8:
                 technicianWithMostIncidentsSolvedInNDays();
                 break;
-            //darle un servicio a un cliente
+            //Consultar técnico con más incidentes resueltos de cierta especialidad en los últimos n días
             case 9:
+                technicianWithMostIncidentsSolvedInNDaysSpeciality();
                 break;
-            //darle un servicio a un cliente
+            //Consultar técnico más rápido
             case 10:
                 break;
         }
@@ -208,6 +210,26 @@ public class MenuRRHH implements Menu{
         Technician technician= technicians.stream().max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).orElse(null);
         if(technician!=null){
             System.out.println("El técnico con más incidentes resueltos en los últimos "+n+" días es" + technician);
+        }
+    }
+
+    private void technicianWithMostIncidentsSolvedInNDaysSpeciality(){
+        int n;
+        int specialityID;
+        System.out.print("Ingrese la cantidad de días: ");
+        n=scan.nextInt();
+        System.out.println();
+        System.out.print("Ingrese el id de la especialidad: ");
+        listSpecialities();
+        specialityID=scan.nextInt();
+        System.out.println();
+        Speciality speciality = controllerSpeciality.getSpeciality((long)specialityID);
+        List<Technician> technicians=controllerTechnician.getAllTechnician();
+        technicians.stream().filter(t -> t.getSpecialitiesList().contains(speciality)).max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).ifPresent(technician -> System.out.println("El técnico con más incidentes resueltos en los últimos " + n + " días es" + technician));
+        System.out.println("lista de prueba ");
+        for (Technician t: controllerTechnician.getAllTechnician()){//.stream().filter(t -> t.getSpecialitiesList().contains(speciality)).collect(Collectors.toSet())){
+
+            System.out.println(t);
         }
     }
 
