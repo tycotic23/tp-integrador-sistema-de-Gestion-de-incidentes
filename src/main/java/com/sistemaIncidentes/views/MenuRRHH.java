@@ -31,7 +31,32 @@ public class MenuRRHH implements Menu{
 
     @Override
     public void selectOption(int option) {
-
+        switch (option){
+            //ver todos los tecnicos
+            case 1:
+                listTechnician();
+                break;
+            //Ver un tecnico
+            case 2:
+                getTechnician();
+                break;
+            //Borrar un tecnico
+            case 3:
+                removeClient();
+                break;
+            //Actualizar un cliente
+            case 4:
+                updateClient();
+                break;
+            //alta de cliente
+            case 5:
+                addClient();
+                break;
+            //darle un servicio a un cliente
+            case 6:
+                addServiceToClient();
+                break;
+        }
 
     }
 
