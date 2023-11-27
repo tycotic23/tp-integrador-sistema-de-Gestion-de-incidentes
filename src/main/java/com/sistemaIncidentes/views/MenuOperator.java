@@ -19,6 +19,7 @@ public class MenuOperator implements Menu {
     private ControllerTechnician controllerTechnichian = new ControllerTechnician();
     private ControllerTypeProblem controllerTypeProblem = new ControllerTypeProblem();
     private SpecialityTypeProblem specialityType = new SpecialityTypeProblem();
+    private ControllerTechnician controllerTechnician = new ControllerTechnician();
 
     private Scanner scan = new Scanner (System.in);
     @Override
@@ -45,11 +46,11 @@ public class MenuOperator implements Menu {
             case 1:
                 listClient();
                 break;
-            //Ver un cliente
+            //Ver todos los tecnicos
             case 2:
                 listTechnician();
                 break;
-            //Borrar un cliente
+            //ver tecnicos disponibles para un problema
             case 3:
 
                 break;
@@ -90,5 +91,11 @@ public class MenuOperator implements Menu {
         System.out.println("Ingrese el id del cliente");
         clientId=scan.nextInt();
         System.out.println(clientController.getClient((long)clientId));
+    }
+    private void getTechnician(){
+        int technicianId=0;
+        System.out.println("Ingrese el id del Tecnico");
+        technicianId=scan.nextInt();
+        System.out.println(controllerTechnician.getTechnician((long)technicianId));
     }
 }
