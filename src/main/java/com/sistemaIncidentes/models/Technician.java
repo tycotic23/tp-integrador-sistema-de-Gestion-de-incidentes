@@ -3,8 +3,10 @@ package com.sistemaIncidentes.models;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Technician {
@@ -53,6 +55,16 @@ public class Technician {
         return incidents;
     }
 
+    public int getIncidentsSolvedNumber(){
+        return this.incidents.stream().filter(Incident::isSolved).collect(Collectors.toSet()).size();
+    }
+
+    public int getIncidentsSolvedNumberFromLastNDays(int n){
+        LocalDate dateFilter=LocalDate.now().minusDays(n);
+        return this.incidents.stream().filter(Incident::isSolved).filter(i->i.getDate().isAfter(dateFilter)).collect(Collectors.toSet()).size();
+    }
+
+
     public void setIncidents(Set<Incident> incidents) {
         this.incidents = incidents;
     }
@@ -84,6 +96,15 @@ public class Technician {
                 ", incidents=" + incidents +
                 '}';
     }
+
+    public String toStringTechIncidents(){
+        return "Technician{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", incidents=" + incidents +
+                '}';
+    }
+
 
 
 }

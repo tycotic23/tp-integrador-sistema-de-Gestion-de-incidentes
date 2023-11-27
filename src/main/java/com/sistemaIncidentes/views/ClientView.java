@@ -2,6 +2,7 @@ package com.sistemaIncidentes.views;
 
 import com.sistemaIncidentes.controllers.ClientController;
 import com.sistemaIncidentes.controllers.ClientServiceController;
+import com.sistemaIncidentes.controllers.IncidentController;
 import com.sistemaIncidentes.controllers.ServiceController;
 import com.sistemaIncidentes.models.Client;
 import com.sistemaIncidentes.models.ClientService;
@@ -36,6 +37,8 @@ public class ClientView {
         clientServiceController.addClientToService(client,2);
         clientServiceController.addClientToService(client,3);
         clientServiceController.addClientToService(client2,4);*/
+        /*IncidentController incidentController=new IncidentController();
+        incidentController.getAllIncident();*/
 
 
 
@@ -76,11 +79,13 @@ public class ClientView {
             option = scan.nextInt();
             switch (option) {
                 case 1:
+                    menu=new MenuRRHH();
                     break;
                 case 2:
                     menu=new MenuComercial();
                     break;
                 case 3:
+                    menu=new MenuOperator();
                     break;
             }
         }while(option<1 || option>3);

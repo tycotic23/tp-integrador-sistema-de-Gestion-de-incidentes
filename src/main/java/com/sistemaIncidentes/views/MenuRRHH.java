@@ -6,14 +6,16 @@ import com.sistemaIncidentes.controllers.SpecialityTechnicianController;
 import com.sistemaIncidentes.models.Technician;
 import com.sistemaIncidentes.models.Speciality;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuRRHH implements Menu{
 
     private Scanner scan = new Scanner (System.in);
-    private ControllerTechnician controllerTechnician;
-    private ControllerSpeciality controllerSpeciality;
-    private SpecialityTechnicianController specialityTechnicianController;
+    private ControllerTechnician controllerTechnician=new ControllerTechnician();
+    private ControllerSpeciality controllerSpeciality=new ControllerSpeciality();
+    private SpecialityTechnicianController specialityTechnicianController=new SpecialityTechnicianController();
 
     @Override
     public void printMenu() {
@@ -21,8 +23,8 @@ public class MenuRRHH implements Menu{
         System.out.println("2-Ver un técnico");
         System.out.println("3-Dar de baja un técnico");
         System.out.println("4-Actualizar un técnico");
-        System.out.println("5-Asignar nueva especialidad a un técnico");
-        System.out.println("6-Dar alta de un técnico");
+        System.out.println("5-Dar alta de un técnico");
+        System.out.println("6-Asignar nueva especialidad a un técnico");
         System.out.println("7-Crear informe de incidentes");
         System.out.println("8-Consultar técnico con más incidentes resueltos en los últimos n días");
         System.out.println("9-Consultar técnico con más incidentes resueltos de cierta especialidad en los últimos n días");
@@ -42,19 +44,33 @@ public class MenuRRHH implements Menu{
                 break;
             //Borrar un tecnico
             case 3:
-                removeClient();
+                removeTechnician();
                 break;
-            //Actualizar un cliente
+            //Actualizar un tecnico
             case 4:
-                updateClient();
+                updateTechnician();
                 break;
-            //alta de cliente
+            //alta de tecnico
             case 5:
-                addClient();
+                addTechnician();
                 break;
             //darle un servicio a un cliente
             case 6:
-                addServiceToClient();
+                addSpecialityToTechnician();
+                break;
+            //Crear informe de incidentes
+            case 7:
+                listTechnicianWithIncidents();
+                break;
+            //encontrar tecnico con mas incidentes resueltos
+            case 8:
+                technicianWithMostIncidentsSolvedInNDays();
+                break;
+            //darle un servicio a un cliente
+            case 9:
+                break;
+            //darle un servicio a un cliente
+            case 10:
                 break;
         }
 
@@ -62,7 +78,7 @@ public class MenuRRHH implements Menu{
 
     @Override
     public boolean isValidOption(int option) {
-        return option>=1 && option <=9;
+        return option>=1 && option <=10;
     }
 
 
@@ -71,13 +87,9 @@ public class MenuRRHH implements Menu{
     private void addTechnician(){
         String change;
         //pedir nuevos datos
-        //razon social
-        System.out.print("Razon social: ");
-        String businessName=scan.next();
-        System.out.println();
-        //CUIT
-        System.out.print("CUIT: ");
-        String cuit=scan.next();
+        //nombre
+        System.out.print("Nombre: ");
+        String name=scan.next();
         System.out.println();
         //email
         System.out.print("Email: ");
@@ -85,12 +97,28 @@ public class MenuRRHH implements Menu{
         System.out.println();
 
         //persistir
-        //technicianController.createTechnician(businessName,cuit,email);
+        Technician technician = new Technician(name,email);
+        controllerTechnician.createTechnician(technician);
+        int speciality;
+        String other;
+        do{
+            System.out.print("Elija una especialidad para el técnico (escriba su id): ");
+            listSpecialities();
+            speciality=scan.nextInt();
+            System.out.println();
+            //persistir la especialidad y crear la relacion
+            specialityTechnicianController.createSpecialityTechnician(controllerSpeciality.getSpeciality((long)speciality),technician);
+            //preguntar si desea agregar otra
+            do {
+                System.out.print("¿Desea agregar otra? s/n");
+                other=scan.next();
+            }while(!other.equals("s") && !other.equals("n"));
+        }while(!other.equals("n"));
     }
 
-    private void addServiceToTechnician(){
+    private void addSpecialityToTechnician(){
         int technicianId=0;
-        int serviceId=0;
+        int specialityId=0;
         System.out.println("Ingrese el id del techniciane a añadir un servicio");
         //mostrar techniciane original
         technicianId=scan.nextInt();
@@ -100,10 +128,10 @@ public class MenuRRHH implements Menu{
         listSpecialities();
         //pedir id del servicio
         System.out.println("Ingrese el id del servicio elegido");
-        serviceId=scan.nextInt();
-        //Service service=serviceController.getService((long)serviceId);
+        specialityId=scan.nextInt();
+        Speciality speciality=controllerSpeciality.getSpeciality((long)specialityId);
         //crear relacion
-        //technicianServiceController.createTechnicianService(technician,service);
+        specialityTechnicianController.createSpecialityTechnician(speciality,technician);
         System.out.println("Añadido con éxito");
     }
 
@@ -171,6 +199,24 @@ public class MenuRRHH implements Menu{
         }
     }
 
+    private void technicianWithMostIncidentsSolvedInNDays(){
+        int n;
+        System.out.print("Ingrese la cantidad de días: ");
+        n=scan.nextInt();
+        System.out.println();
+        List<Technician> technicians=controllerTechnician.getAllTechnician();
+        Technician technician= technicians.stream().max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).orElse(null);
+        if(technician!=null){
+            System.out.println("El técnico con más incidentes resueltos en los últimos "+n+" días es" + technician);
+        }
+    }
+
+    private void listTechnicianWithIncidents(){
+        for (Technician t: controllerTechnician.getAllTechnician()){
+            System.out.println(t.toStringTechIncidents());
+        }
+    }
+
     private void listSpecialities(){
         for (Speciality s: controllerSpeciality.getAllSpeciality()){
             System.out.println(s);
@@ -183,4 +229,6 @@ public class MenuRRHH implements Menu{
         technicianId=scan.nextInt();
         System.out.println(controllerTechnician.getTechnician((long)technicianId));
     }
+
+
 }

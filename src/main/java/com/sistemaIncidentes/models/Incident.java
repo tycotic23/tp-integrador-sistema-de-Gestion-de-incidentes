@@ -16,6 +16,10 @@ public class Incident {
     private long id;
 
     //private IncidentState incidentState=new IncidentPending();
+    private boolean solved=true;
+
+    private LocalDate date;
+
     @OneToMany(mappedBy="incident",fetch = FetchType.EAGER)
     private Set<Problem> problems=new HashSet<>();
 
@@ -32,7 +36,7 @@ public class Incident {
     private Technician technician;
 
     public Incident() {
-
+        date=LocalDate.now();
     }
 
 
@@ -94,6 +98,22 @@ public class Incident {
     public void closeIncident(double timeInHours){
         this.incidentState.close(timeInHours);
     }*/
+
+    public boolean isSolved() {
+        return solved;
+    }
+
+    public void setSolved(boolean solved) {
+        this.solved = solved;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
     @Override
     public String toString() {

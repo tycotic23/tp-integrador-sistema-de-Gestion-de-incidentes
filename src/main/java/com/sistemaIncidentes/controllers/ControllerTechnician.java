@@ -9,12 +9,11 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 
 public class ControllerTechnician {
-    public void createTechnician(){
+    public void createTechnician(Technician technician){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
         try{
-            Technician technician = new Technician();
             session.beginTransaction();
             session.persist(technician);
             session.getTransaction().commit();
