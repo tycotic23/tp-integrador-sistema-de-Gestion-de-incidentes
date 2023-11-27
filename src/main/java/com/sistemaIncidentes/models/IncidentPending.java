@@ -14,7 +14,7 @@ public class IncidentPending implements IncidentState {
 
     @Override
     public void close(double timeInHours) {
-        incident.setIncidentState(new IncidentSolved(timeInHours));
+        //incident.setIncidentState(new IncidentSolved(timeInHours));
     }
 
     @Override

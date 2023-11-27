@@ -14,6 +14,5 @@
         <mapping class="com.sistemaIncidentes.models.Client" />
         <mapping class="com.sistemaIncidentes.models.ClientService" />
         <mapping class="com.sistemaIncidentes.models.Service" />
-        <mapping class="com.sistemaIncidentes.models.Incident" />
     </session-factory>
 </hibernate-configuration>

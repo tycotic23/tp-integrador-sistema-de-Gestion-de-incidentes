@@ -7,6 +7,9 @@ import com.sistemaIncidentes.models.Client;
 import com.sistemaIncidentes.models.ClientService;
 import com.sistemaIncidentes.models.Service;
 
+import java.util.List;
+import java.util.Scanner;
+
 public class ClientView {
 
     public static void main(String[] args) {
@@ -43,10 +46,10 @@ public class ClientView {
         Service service = serviceController.getService(1);
 
         //conectar los clientservice con sus servicios
-        clientServiceController.addServiceToClient(service,1);
+        /*clientServiceController.addServiceToClient(service,1);
         clientServiceController.addServiceToClient(service,2);
         clientServiceController.addServiceToClient(service,3);
-        clientServiceController.addServiceToClient(service,4);
+        clientServiceController.addServiceToClient(service,4);*/
 
 
 
@@ -60,8 +63,48 @@ public class ClientView {
         //menu: cerrar incidente
         //en tecnico pasar su incidente a null
         //mandar notificacion al tecnico
+        Scanner scan = new Scanner (System.in);
+        int option=0;
+        Menu menu=new MenuComercial();
+        //el menu cambia segun el tipo de usuario
+        do {
+            System.out.println("¿Qué tipo de usuario es?");
+            System.out.println("Elija una opcion: ");
+            System.out.println("1-RRHH");
+            System.out.println("2-Comercial");
+            System.out.println("3-Mesa de ayuda");
+            option = scan.nextInt();
+            switch (option) {
+                case 1:
+                    break;
+                case 2:
+                    menu=new MenuComercial();
+                    break;
+                case 3:
+                    break;
+            }
+        }while(option<1 || option>3);
 
+        String fin;
+        do{
+            //imprimir menu
+            System.out.println("Elija una opcion: ");
+            menu.printMenu();
+            do {
+                option = scan.nextInt();
+            }while(!menu.isValidOption(option));
+            //ejecutar la opcion elegida
+            menu.selectOption(option);
 
-        System.out.println("Hello world! all created");
+            //finalizar o continuar el bucle
+            do {
+                System.out.print("¿Continuar? s/n ");
+                fin=scan.next();
+            }while(!fin.equals("s") && !fin.equals("n"));
+            System.out.println();
+
+        }while(!fin.equals("n"));
     }
+
+
 }

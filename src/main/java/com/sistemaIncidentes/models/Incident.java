@@ -16,9 +16,8 @@ public class Incident {
     private long id;
 
     //private IncidentState incidentState=new IncidentPending();
-
-    /*@OneToMany(mappedBy="incident",fetch = FetchType.EAGER)
-    private Set<Problem> problems=new HashSet<>();*/
+    @OneToMany(mappedBy="incident",fetch = FetchType.EAGER)
+    private Set<Problem> problems=new HashSet<>();
 
     @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="service_id")
@@ -28,9 +27,9 @@ public class Incident {
     @JoinColumn(name="client_id")
     private Client client;
 
-    /*@ManyToOne(fetch=FetchType.EAGER)
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="technician_id")
-    private Technician technician;*/
+    private Technician technician;
 
     public Incident() {
 
@@ -58,21 +57,21 @@ public class Incident {
         this.client = client;
     }
 
-    /*public Technician getTechnician() {
+    public Technician getTechnician() {
         return technician;
     }
 
     public void setTechnician(Technician technician) {
         this.technician = technician;
-    }*/
+    }
 
-    /*public Set<Problem> getProblems() {
+    public Set<Problem> getProblems() {
         return problems;
     }
 
     public void setProblems(Set<Problem> problems) {
         this.problems = problems;
-    }*/
+    }
 
     /*public IncidentState getIncidentState() {
         return incidentState;
@@ -81,12 +80,12 @@ public class Incident {
     public void setIncidentState(IncidentState incidentState) {
         this.incidentState = incidentState;
         this.incidentState.setIncident(this);
-    }
+    }*/
 
     public void addProblem(Problem problem) {
         problem.setIncident(this);
         this.problems.add(problem);
-    }*/
+    }
 
     /*public double getTime(){
         return this.incidentState.getTime();

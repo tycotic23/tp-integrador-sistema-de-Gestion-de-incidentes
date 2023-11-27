@@ -66,6 +66,23 @@ public class ClientController {
         System.out.println( "Error updating client");
     }
 
+    public void updateClient(Client clientUpdated){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            session.persist(clientUpdated);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "successfully updated");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error updating client");
+        }
+
+    }
+
     /*public void addServiceToClient(long id,ClientService clientService){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
