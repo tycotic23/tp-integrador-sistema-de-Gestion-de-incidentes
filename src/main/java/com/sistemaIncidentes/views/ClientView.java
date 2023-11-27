@@ -16,16 +16,16 @@ public class ClientView {
 
 
         //crear controladores
-        ClientServiceController clientServiceController=new ClientServiceController();
+        /*ClientServiceController clientServiceController=new ClientServiceController();
         ClientController clientController=new ClientController();
-        ServiceController serviceController=new ServiceController();
+        ServiceController serviceController=new ServiceController();*/
         //crear un cliente
         /*clientController.createClient("aasd","asdasd","asdasd");
         clientController.createClient("aasd","asdasd","asdasd");
         clientController.createClient("aasd","asdasd","asdasd");*/
         //traer unos clientes
-        Client client = clientController.getClient(1);
-        Client client2 = clientController.getClient(2);
+        /*Client client = clientController.getClient(1);
+        Client client2 = clientController.getClient(2);*/
         //crear un clientservice
         /*clientServiceController.createClientService();
         clientServiceController.createClientService();
@@ -43,7 +43,7 @@ public class ClientView {
         //serviceController.createService("cables");
 
         //traer un servicio
-        Service service = serviceController.getService(1);
+        //Service service = serviceController.getService(1);
 
         //conectar los clientservice con sus servicios
         /*clientServiceController.addServiceToClient(service,1);

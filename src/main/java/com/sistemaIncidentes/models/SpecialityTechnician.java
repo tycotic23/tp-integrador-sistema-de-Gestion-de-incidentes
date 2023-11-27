@@ -3,8 +3,12 @@ package com.sistemaIncidentes.models;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
-public class SpecialityTypeProblem {
+public class SpecialityTechnician {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
@@ -14,11 +18,11 @@ public class SpecialityTypeProblem {
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="typeProblem_id")
-    private TypeProblem typeProblem;
+    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="technician_id")
+    private Technician technician;
 
-    public SpecialityTypeProblem() {
+    public SpecialityTechnician() {
     }
 
     public long getId() {
@@ -33,18 +37,11 @@ public class SpecialityTypeProblem {
         this.speciality = speciality;
     }
 
-    public TypeProblem getTypeProblem() {
-        return typeProblem;
+    public Technician getTechnician() {
+        return technician;
     }
 
-    public void setTypeProblem(TypeProblem typeProblem) {
-        this.typeProblem = typeProblem;
-    }
-
-    @Override
-    public String toString() {
-        return "SpecialityTypeProblem{" +
-                "id=" + id +
-                '}';
+    public void setTechnician(Technician technician) {
+        this.technician = technician;
     }
 }

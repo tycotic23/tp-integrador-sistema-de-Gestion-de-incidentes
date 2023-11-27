@@ -23,8 +23,9 @@ public class ServiceController {
             System.out.println( "successfully created");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error in creation of service");
         }
-        System.out.println( "Error in creation of service");
+
 
     }
 
@@ -41,8 +42,9 @@ public class ServiceController {
             System.out.println( "successfully removed");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error deleting service");
         }
-        System.out.println( "Error deleting service");
+
     }
 
     public void updateService(long id,String name){
@@ -59,8 +61,9 @@ public class ServiceController {
             System.out.println(  "successfully updated");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println(  "Error updating service");
         }
-        System.out.println(  "Error updating service");
+
     }
 
     public Service getService(long id){
@@ -75,8 +78,9 @@ public class ServiceController {
             return service;
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println(  "Error updating service");
         }
-        System.out.println(  "Error updating service");
+
         return null;
     }
 

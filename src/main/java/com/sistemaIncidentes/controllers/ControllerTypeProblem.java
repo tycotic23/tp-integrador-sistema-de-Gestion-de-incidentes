@@ -24,8 +24,9 @@ public class ControllerTypeProblem {
             System.out.println( "successfully created");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error in creation of type problem");
         }
-        System.out.println( "Error in creation of type problem");
+
 
     }
 
@@ -42,8 +43,9 @@ public class ControllerTypeProblem {
             System.out.println( "successfully removed");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error deleting type problem");
         }
-        System.out.println( "Error deleting type problem");
+
     }
 
     public void updateTypeProblem(long id){
@@ -62,27 +64,12 @@ public class ControllerTypeProblem {
             System.out.println( "successfully updated");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error updating type problem");
         }
-        System.out.println( "Error updating type problem");
+
     }
 
-    /*public void addServiceToClient(long id,ClientService clientService){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
 
-        try{
-            session.beginTransaction();
-            Client client = session.get(Client.class,id);
-            client.addService(clientService);
-            //session.persist(client);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            return "successfully updated";
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "Error updating client";
-    }*/
 
     public TypeProblem getTypeProblem(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(TypeProblem.class).buildSessionFactory();

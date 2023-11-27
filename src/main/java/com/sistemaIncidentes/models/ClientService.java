@@ -12,7 +12,6 @@ public class ClientService {
     private long id;
 
     @ManyToOne(fetch=FetchType.EAGER)
-    //@JoinTable(name = "client")
     @JoinColumn(name="client_id")
     private Client client;
 
@@ -47,7 +46,6 @@ public class ClientService {
     public String toString() {
         return "ClientService{" +
                 "id=" + id +
-                ", client=" + client.getId() +
                 '}';
     }
 }

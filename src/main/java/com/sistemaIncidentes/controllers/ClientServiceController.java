@@ -25,8 +25,30 @@ public class ClientServiceController {
             System.out.println( "successfully created");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error in creation of client service");
         }
-        System.out.println( "Error in creation of client service");
+
+
+    }
+
+    public void createClientService(Client client, Service service){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(ClientService.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            ClientService clientService=new ClientService();
+            session.beginTransaction();
+            client.addService(clientService);
+            service.addClient(clientService);
+            session.persist(clientService);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "successfully created");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error in creation of client service");
+        }
+
 
     }
 
@@ -43,8 +65,9 @@ public class ClientServiceController {
             System.out.println( "successfully removed");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error deleting client service");
         }
-        System.out.println( "Error deleting client service");
+
     }
 
     public void updateClientService(long id,ClientService clientService){

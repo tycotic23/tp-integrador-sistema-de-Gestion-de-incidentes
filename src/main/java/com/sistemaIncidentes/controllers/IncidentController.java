@@ -22,8 +22,9 @@ public class IncidentController {
             System.out.println( "successfully created");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error in creation of client");
         }
-        System.out.println( "Error in creation of client");
+
 
     }
 
@@ -40,11 +41,12 @@ public class IncidentController {
             System.out.println( "successfully removed");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error deleting incident");
         }
-        System.out.println( "Error deleting incident");
+
     }
 
-    public void updateIncident(){
+    public void updateIncident(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -59,27 +61,10 @@ public class IncidentController {
             System.out.println( "successfully updated");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error updating incident");
         }
-        System.out.println( "Error updating incident");
+
     }
-
-    /*public void addServiceToClient(long id,ClientService clientService){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            Client client = session.get(Client.class,id);
-            client.addService(clientService);
-            //session.persist(client);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            return "successfully updated";
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "Error updating client";
-    }*/
 
     public Incident getIncident(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();

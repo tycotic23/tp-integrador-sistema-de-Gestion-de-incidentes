@@ -87,4 +87,14 @@ public class TypeProblem {
         problem.setTypeProblem(this);
         this.problems.add(problem);
     }
+
+    @Override
+    public String toString() {
+        return "TypeProblem{" +
+                "id=" + id +
+                ", maxTime=" + maxTime +
+                ", estimatedTime=" + estimatedTime +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

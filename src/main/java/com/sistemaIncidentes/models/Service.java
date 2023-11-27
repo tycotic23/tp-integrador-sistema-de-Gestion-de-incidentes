@@ -16,8 +16,8 @@ public class Service {
     @OneToMany(mappedBy="service",fetch = FetchType.EAGER)
     private Set<ClientService> clients=new HashSet<>();
 
-   /* @OneToMany(mappedBy="service",fetch = FetchType.EAGER)
-    private Set<Incident> incidents=new HashSet<>();*/
+   @OneToMany(mappedBy="service",fetch = FetchType.EAGER)
+    private Set<Incident> incidents=new HashSet<>();
 
     public Service() {
     }
@@ -46,29 +46,30 @@ public class Service {
         this.clients = clients;
     }
 
-   /* public Set<Incident> getIncidents() {
+   public Set<Incident> getIncidents() {
         return incidents;
     }
 
     public void setIncidents(Set<Incident> incidents) {
         this.incidents = incidents;
-    }*/
+    }
 
     public void addClient(ClientService clientService){
         clientService.setService(this);
         this.clients.add(clientService);
     }
 
-    /*public void addIncident(Incident incident){
+    public void addIncident(Incident incident){
         incident.setService(this);
         this.incidents.add(incident);
-    }*/
+    }
 
     @Override
     public String toString() {
         return "Service{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", incidents=" + incidents +
                 '}';
     }
 }

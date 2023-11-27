@@ -23,8 +23,9 @@ public class SpecialityTypeProblemController {
             System.out.println( "successfully created");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error in creation of speciality type problem");
         }
-        System.out.println( "Error in creation of speciality type problem");
+
 
     }
 
@@ -41,8 +42,9 @@ public class SpecialityTypeProblemController {
             System.out.println( "successfully removed");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error deleting speciality type problem");
         }
-        System.out.println( "Error deleting speciality type problem");
+
     }
 
     public void updateSpecialityTypeProblem(long id){
@@ -61,27 +63,10 @@ public class SpecialityTypeProblemController {
             System.out.println( "successfully updated");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error updating speciality type problem");
         }
-        System.out.println( "Error updating speciality type problem");
+
     }
-
-    /*public void addServiceToClient(long id,ClientService clientService){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            Client client = session.get(Client.class,id);
-            client.addService(clientService);
-            //session.persist(client);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            return "successfully updated";
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "Error updating client";
-    }*/
 
     public SpecialityTypeProblem getService(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTypeProblem.class).buildSessionFactory();

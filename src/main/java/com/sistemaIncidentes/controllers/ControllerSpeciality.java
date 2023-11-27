@@ -23,8 +23,9 @@ public class ControllerSpeciality {
             System.out.println( "successfully created");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error in creation of speciality");
         }
-        System.out.println( "Error in creation of speciality");
+
 
     }
 
@@ -41,8 +42,9 @@ public class ControllerSpeciality {
             System.out.println( "successfully removed");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error deleting speciality");
         }
-        System.out.println( "Error deleting speciality");
+
     }
 
     public void updateSpeciality(long id){
@@ -61,27 +63,12 @@ public class ControllerSpeciality {
             System.out.println( "successfully updated");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error updating speciality");
         }
-        System.out.println( "Error updating speciality");
+
     }
 
-    /*public void addServiceToClient(long id,ClientService clientService){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
 
-        try{
-            session.beginTransaction();
-            Client client = session.get(Client.class,id);
-            client.addService(clientService);
-            //session.persist(client);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            return "successfully updated";
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "Error updating client";
-    }*/
 
     public Speciality getSpeciality(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Speciality.class).buildSessionFactory();

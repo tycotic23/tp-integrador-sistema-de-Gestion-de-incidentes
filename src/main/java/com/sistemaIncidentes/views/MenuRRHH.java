@@ -1,66 +1,41 @@
 package com.sistemaIncidentes.views;
 
-import com.sistemaIncidentes.controllers.ClientController;
-import com.sistemaIncidentes.controllers.ClientServiceController;
-import com.sistemaIncidentes.controllers.ServiceController;
+import com.sistemaIncidentes.controllers.ControllerTechnician;
 import com.sistemaIncidentes.models.Client;
 import com.sistemaIncidentes.models.Service;
+import com.sistemaIncidentes.models.Speciality;
 
-import java.util.Scanner;
+public class MenuRRHH implements Menu{
 
-public class MenuComercial implements Menu{
+    private ControllerTechnician controllerTechnician;
+    private Speciality
 
-    private ClientController clientController=new ClientController();
-    private ServiceController serviceController=new ServiceController();
-    private ClientServiceController clientServiceController= new ClientServiceController();
-    private Scanner scan = new Scanner (System.in);
     @Override
     public void printMenu() {
-        System.out.println("1-Ver todos los clientes");
-        System.out.println("2-Ver un cliente");
-        System.out.println("3-Borrar un cliente");
-        System.out.println("4-Actualizar un cliente");
-        System.out.println("5-Dar alta de un cliente");
-        System.out.println("6-Contratar servicio para cliente");
-    }
-
-    @Override
-    public boolean isValidOption(int option) {
-        return option>=1 && option <=6;
+        System.out.println("1-Ver todos los técnicos");
+        System.out.println("2-Ver un técnico");
+        System.out.println("3-Dar de baja un técnico");
+        System.out.println("4-Actualizar un técnico");
+        System.out.println("5-Dar alta de un técnico");
+        System.out.println("6-Crear informe de incidentes");
+        System.out.println("7-Consultar técnico con más incidentes resueltos en los últimos n días");
+        System.out.println("8-Consultar técnico con más incidentes resueltos de cierta especialidad en los últimos n días");
+        System.out.println("9-Consultar técnico más rápido");
     }
 
     @Override
     public void selectOption(int option) {
-        Scanner scan = new Scanner (System.in);
-        int clientId=0;
-        switch (option){
-            //ver todos los clientes
-            case 1:
-                listClient();
-                break;
-            //Ver un cliente
-            case 2:
-                getClient();
-                break;
-            //Borrar un cliente
-            case 3:
-                removeClient();
-                break;
-            //Actualizar un cliente
-            case 4:
-                updateClient();
-                break;
-            //alta de cliente
-            case 5:
-                addClient();
-                break;
-            //darle un servicio a un cliente
-            case 6:
-                addServiceToClient();
-                break;
-        }
+
 
     }
+
+    @Override
+    public boolean isValidOption(int option) {
+        return option>=1 && option <=9;
+    }
+
+
+
 
     private void addClient(){
         String change;

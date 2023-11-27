@@ -22,8 +22,9 @@ public class ControllerTechnician {
             System.out.println( "successfully created");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error in creation of technichian");
         }
-        System.out.println( "Error in creation of technichian");
+
 
     }
 
@@ -40,8 +41,9 @@ public class ControllerTechnician {
             System.out.println( "successfully removed");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error deleting technichian");
         }
-        System.out.println( "Error deleting technichian");
+
     }
 
     public void updateTechnichian(long id){
@@ -60,27 +62,11 @@ public class ControllerTechnician {
             System.out.println( "successfully updated");
         }catch (Exception e){
             e.printStackTrace();
+            System.out.println( "Error updating technichian");
         }
-        System.out.println( "Error updating technichian");
+
     }
 
-    /*public void addServiceToClient(long id,ClientService clientService){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            Client client = session.get(Client.class,id);
-            client.addService(clientService);
-            //session.persist(client);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            return "successfully updated";
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return "Error updating client";
-    }*/
 
     public Technician getTechnichian(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();

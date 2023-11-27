@@ -75,5 +75,16 @@ public class Problem {
     public void setTypeProblem(TypeProblem typeProblem) {
         this.typeProblem = typeProblem;
     }
+
+    @Override
+    public String toString() {
+        return "Problem{" +
+                "id=" + id +
+                ", isComplex=" + isComplex +
+                ", estimatedTime=" + estimatedTime +
+                ", description='" + description + '\'' +
+                ", typeProblem=" + typeProblem +
+                '}';
+    }
 }
 

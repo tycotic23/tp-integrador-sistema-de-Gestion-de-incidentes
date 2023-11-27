@@ -20,8 +20,8 @@ public class Client {
     @OneToMany(mappedBy="client",fetch = FetchType.EAGER)
     private Set<ClientService> hiredServices=new HashSet<>();
 
-    /*@OneToMany(mappedBy="client",fetch = FetchType.EAGER)
-    private Set<Incident> incidents=new HashSet<>();*/
+    @OneToMany(mappedBy="client",fetch = FetchType.EAGER)
+    private Set<Incident> incidents=new HashSet<>();
 
     public Client() {
     }
@@ -68,26 +68,33 @@ public class Client {
         this.hiredServices = hiredServices;
     }
 
-    /*public Set<Incident> getIncidents() {
+    public Set<Incident> getIncidents() {
         return incidents;
     }
 
     public void setIncidents(Set<Incident> incidents) {
         this.incidents = incidents;
-    }*/
+    }
 
     public void addService(ClientService clientService){
         clientService.setClient(this);
         this.hiredServices.add(clientService);
     }
 
-    /*public void addIncident(Incident incident){
+    public void addIncident(Incident incident){
         incident.setClient(this);
         this.incidents.add(incident);
-    }*/
+    }
 
     @Override
     public String toString() {
-        return email+" - "+CUIT+" - "+businessName;
+        return "Client{" +
+                "id=" + id +
+                ", businessName='" + businessName + '\'' +
+                ", CUIT='" + CUIT + '\'' +
+                ", email='" + email + '\'' +
+                ", hiredServices=" + hiredServices +
+                ", incidents=" + incidents +
+                '}';
     }
 }

@@ -16,7 +16,7 @@ public class Speciality {
     private String name;
 
     @OneToMany(mappedBy="speciality",fetch = FetchType.EAGER)
-    private Set<Technician> technicians=new HashSet<>();
+    private Set<SpecialityTechnician> technicians=new HashSet<>();
 
     //se relaciona con tipo de problema, no con servicios
     @OneToMany(mappedBy="speciality",fetch = FetchType.EAGER)
@@ -41,12 +41,16 @@ public class Speciality {
         this.name = name;
     }
 
-    public Set<Technician> getTechnicians() {
+    public Set<SpecialityTechnician> getTechnicians() {
         return technicians;
     }
 
-    public void setTechnicians(Set<Technician> technicians) {
+    public void setTechnicians(Set<SpecialityTechnician> technicians) {
         this.technicians = technicians;
+    }
+
+    public void addTechnician(){
+        
     }
 
     public Set<SpecialityTypeProblem> getTypeProblems() {
@@ -65,5 +69,14 @@ public class Speciality {
     public void addTypeProblem(SpecialityTypeProblem typeProblem){
         typeProblem.setSpeciality(this);
         this.typeProblems.add(typeProblem);
+    }
+
+    @Override
+    public String toString() {
+        return "Speciality{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", typeProblems=" + typeProblems +
+                '}';
     }
 }

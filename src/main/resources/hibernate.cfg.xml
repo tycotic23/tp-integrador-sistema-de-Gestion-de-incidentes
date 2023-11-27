@@ -14,5 +14,11 @@
         <mapping class="com.sistemaIncidentes.models.Client" />
         <mapping class="com.sistemaIncidentes.models.ClientService" />
         <mapping class="com.sistemaIncidentes.models.Service" />
+        <mapping class="com.sistemaIncidentes.models.Incident" />
+        <mapping class="com.sistemaIncidentes.models.Problem" />
+        <mapping class="com.sistemaIncidentes.models.Speciality" />
+        <mapping class="com.sistemaIncidentes.models.SpecialityTypeProblem" />
+        <mapping class="com.sistemaIncidentes.models.Technician" />
+        <mapping class="com.sistemaIncidentes.models.TypeProblem" />
     </session-factory>
 </hibernate-configuration>

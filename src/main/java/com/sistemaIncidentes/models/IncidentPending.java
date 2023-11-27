@@ -8,8 +8,9 @@ public class IncidentPending implements IncidentState {
 
     @Override
     public double getTime() {
+        return 0.0;
         //recorre la lista de problemas y suma el tiempo de todos ellos
-        return this.incident.getProblems().stream().map(Problem::getEstimatedTime).reduce(0.0, Double::sum);
+        //return this.incident.getProblems().stream().map(Problem::getEstimatedTime).reduce(0.0, Double::sum);
     }
 
     @Override

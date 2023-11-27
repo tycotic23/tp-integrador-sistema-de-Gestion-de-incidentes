@@ -41,7 +41,7 @@ public class Incident {
         return id;
     }
 
-    public Service getService() {
+   public Service getService() {
         return service;
     }
 
@@ -95,5 +95,11 @@ public class Incident {
         this.incidentState.close(timeInHours);
     }*/
 
-
+    @Override
+    public String toString() {
+        return "Incident{" +
+                "id=" + id +
+                ", problems=" + problems +
+                '}';
+    }
 }
