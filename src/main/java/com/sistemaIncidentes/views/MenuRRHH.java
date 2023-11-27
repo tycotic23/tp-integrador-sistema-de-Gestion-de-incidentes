@@ -4,7 +4,6 @@ import com.sistemaIncidentes.controllers.ControllerSpeciality;
 import com.sistemaIncidentes.controllers.ControllerTechnician;
 import com.sistemaIncidentes.controllers.SpecialityTechnicianController;
 import com.sistemaIncidentes.models.Technician;
-import com.sistemaIncidentes.models.Service;
 import com.sistemaIncidentes.models.Speciality;
 
 import java.util.Scanner;
@@ -22,11 +21,12 @@ public class MenuRRHH implements Menu{
         System.out.println("2-Ver un técnico");
         System.out.println("3-Dar de baja un técnico");
         System.out.println("4-Actualizar un técnico");
-        System.out.println("5-Dar alta de un técnico");
-        System.out.println("6-Crear informe de incidentes");
-        System.out.println("7-Consultar técnico con más incidentes resueltos en los últimos n días");
-        System.out.println("8-Consultar técnico con más incidentes resueltos de cierta especialidad en los últimos n días");
-        System.out.println("9-Consultar técnico más rápido");
+        System.out.println("5-Asignar nueva especialidad a un técnico");
+        System.out.println("6-Dar alta de un técnico");
+        System.out.println("7-Crear informe de incidentes");
+        System.out.println("8-Consultar técnico con más incidentes resueltos en los últimos n días");
+        System.out.println("9-Consultar técnico con más incidentes resueltos de cierta especialidad en los últimos n días");
+        System.out.println("10-Consultar técnico más rápido");
     }
 
     @Override

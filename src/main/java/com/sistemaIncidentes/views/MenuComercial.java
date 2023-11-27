@@ -31,8 +31,6 @@ public class MenuComercial implements Menu{
 
     @Override
     public void selectOption(int option) {
-        Scanner scan = new Scanner (System.in);
-        int clientId=0;
         switch (option){
             //ver todos los clientes
             case 1:
