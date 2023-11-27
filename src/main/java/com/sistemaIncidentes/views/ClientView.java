@@ -1,9 +1,6 @@
 package com.sistemaIncidentes.views;
 
-import com.sistemaIncidentes.controllers.ClientController;
-import com.sistemaIncidentes.controllers.ClientServiceController;
-import com.sistemaIncidentes.controllers.IncidentController;
-import com.sistemaIncidentes.controllers.ServiceController;
+import com.sistemaIncidentes.controllers.*;
 import com.sistemaIncidentes.models.Client;
 import com.sistemaIncidentes.models.ClientService;
 import com.sistemaIncidentes.models.Service;

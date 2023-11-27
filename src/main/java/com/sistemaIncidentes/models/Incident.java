@@ -16,9 +16,10 @@ public class Incident {
     private long id;
 
     //private IncidentState incidentState=new IncidentPending();
-    private boolean solved=true;
+    private boolean solved=false;
 
     private LocalDate date;
+    private double time;
 
     @OneToMany(mappedBy="incident",fetch = FetchType.EAGER)
     private Set<Problem> problems=new HashSet<>();
@@ -91,6 +92,14 @@ public class Incident {
         this.problems.add(problem);
     }
 
+    public double getTime() {
+        return time;
+    }
+
+    public void setTime(double time) {
+        this.time = time;
+    }
+
     /*public double getTime(){
         return this.incidentState.getTime();
     }
@@ -119,6 +128,8 @@ public class Incident {
     public String toString() {
         return "Incident{" +
                 "id=" + id +
+                ", solved=" + solved +
+                ", date=" + date +
                 ", problems=" + problems +
                 '}';
     }

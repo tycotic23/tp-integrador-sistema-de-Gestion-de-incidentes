@@ -78,6 +78,11 @@ public class Technician {
         return specialities.stream().map(SpecialityTechnician::getSpeciality).collect(Collectors.toSet());
     }
 
+    public boolean hasSpeciality(String specialityName){
+        Set<String> specialities = getSpecialitiesList().stream().map(Speciality::getName).collect(Collectors.toSet());
+        return specialities.contains(specialityName);
+    }
+
     public void setSpecialities(Set<SpecialityTechnician> specialities) {
         this.specialities = specialities;
     }
@@ -92,6 +97,18 @@ public class Technician {
         this.incidents.add(incident);
     }
 
+    public double getAverage(){
+        double totalTime=getIncidents().stream().filter(Incident::isSolved).map(Incident::getTime).reduce(Double::sum).orElse(0.0);
+        if(totalTime==0){
+            return 0;
+        }
+        int incidents=getIncidentsSolvedNumber();
+        if(incidents==0){
+            return 0;
+        }
+        return totalTime/incidents;
+    }
+
     @Override
     public String toString() {
         return "Technician{" +
@@ -99,6 +116,7 @@ public class Technician {
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", incidents=" + incidents +
+                ", specialities=" + getSpecialitiesList() +
                 '}';
     }
 

@@ -73,6 +73,7 @@ public class MenuRRHH implements Menu{
                 break;
             //Consultar técnico más rápido
             case 10:
+                getFasterTechnician();
                 break;
         }
 
@@ -84,6 +85,15 @@ public class MenuRRHH implements Menu{
     }
 
 
+    private void getFasterTechnician(){
+        Technician fasterTechinician=controllerTechnician.getAllTechnician().stream().min(Comparator.comparing(Technician::getAverage)).get();
+        if(fasterTechinician!=null){
+            System.out.println("El técnico con mejor promedio de tiempo al resolver incidentes es "+fasterTechinician);
+        }
+        else{
+            System.out.println("No hay suficientes datos");
+        }
+    }
 
 
     private void addTechnician(){
@@ -225,12 +235,15 @@ public class MenuRRHH implements Menu{
         System.out.println();
         Speciality speciality = controllerSpeciality.getSpeciality((long)specialityID);
         List<Technician> technicians=controllerTechnician.getAllTechnician();
-        technicians.stream().filter(t -> t.getSpecialitiesList().contains(speciality)).max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).ifPresent(technician -> System.out.println("El técnico con más incidentes resueltos en los últimos " + n + " días es" + technician));
-        System.out.println("lista de prueba ");
-        for (Technician t: controllerTechnician.getAllTechnician()){//.stream().filter(t -> t.getSpecialitiesList().contains(speciality)).collect(Collectors.toSet())){
-
-            System.out.println(t);
+        Technician technician=technicians.stream().filter(t -> t.hasSpeciality(speciality.getName())).max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).get();
+        if(technician!=null && technician.getIncidentsSolvedNumberFromLastNDays(n)!=0){
+            System.out.println("El técnico con más incidentes resueltos en los últimos " + n + " días es" + technician);
         }
+        else{
+            System.out.println("No hay suficientes datos de esa fecha");
+        }
+
+
     }
 
     private void listTechnicianWithIncidents(){
