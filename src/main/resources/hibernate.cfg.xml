@@ -20,5 +20,6 @@
         <mapping class="com.sistemaIncidentes.models.SpecialityTypeProblem" />
         <mapping class="com.sistemaIncidentes.models.Technician" />
         <mapping class="com.sistemaIncidentes.models.TypeProblem" />
+        <mapping class="com.sistemaIncidentes.models.SpecialityTechnician" />
     </session-factory>
 </hibernate-configuration>

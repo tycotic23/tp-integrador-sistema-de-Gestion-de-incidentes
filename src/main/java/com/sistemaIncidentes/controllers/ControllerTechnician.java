@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 
 public class ControllerTechnician {
-    public void createService(){
+    public void createTechnician(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -28,7 +28,7 @@ public class ControllerTechnician {
 
     }
 
-    public void deleteService(long id){
+    public void deleteTechnician(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -46,7 +46,7 @@ public class ControllerTechnician {
 
     }
 
-    public void updateTechnichian(long id){
+    public void updateTechnician(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -68,7 +68,7 @@ public class ControllerTechnician {
     }
 
 
-    public Technician getTechnichian(long id){
+    public Technician getTechnician(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -82,11 +82,11 @@ public class ControllerTechnician {
             e.printStackTrace();
 
         }
-        System.out.println( "Error updating service");
+        System.out.println( "Error updating technician");
         return null;
     }
 
-    public List<Technician> getAllTechnichian(){
+    public List<Technician> getAllTechnician(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -94,7 +94,7 @@ public class ControllerTechnician {
             session.beginTransaction();
             CriteriaQuery<Technician> cq=session.getCriteriaBuilder().createQuery(Technician.class);
             cq.from(Technician.class);
-            List<Technician> services =session.createQuery(cq).getResultList();
+            List<Technician> technicians =session.createQuery(cq).getResultList();
             /*for (Client c:clients){
                 System.out.println("Client ID: "+c.getId());
                 System.out.println("Email: "+c.getEmail());
@@ -102,12 +102,12 @@ public class ControllerTechnician {
                 System.out.println("CUIT: "+c.getCUIT());
             }*/
             sessionFactory.close();
-            return services;
+            return technicians;
         }catch (Exception e){
             e.printStackTrace();
             System.out.println( "Error reading technichian");
         }
-        System.out.println( "Finished service list");
+        System.out.println( "Finished technician list");
         return null;
     }
 

@@ -1,14 +1,20 @@
 package com.sistemaIncidentes.views;
 
+import com.sistemaIncidentes.controllers.ControllerSpeciality;
 import com.sistemaIncidentes.controllers.ControllerTechnician;
-import com.sistemaIncidentes.models.Client;
+import com.sistemaIncidentes.controllers.SpecialityTechnicianController;
+import com.sistemaIncidentes.models.Technician;
 import com.sistemaIncidentes.models.Service;
 import com.sistemaIncidentes.models.Speciality;
 
+import java.util.Scanner;
+
 public class MenuRRHH implements Menu{
 
+    private Scanner scan = new Scanner (System.in);
     private ControllerTechnician controllerTechnician;
-    private Speciality
+    private ControllerSpeciality controllerSpeciality;
+    private SpecialityTechnicianController specialityTechnicianController;
 
     @Override
     public void printMenu() {
@@ -37,7 +43,7 @@ public class MenuRRHH implements Menu{
 
 
 
-    private void addClient(){
+    private void addTechnician(){
         String change;
         //pedir nuevos datos
         //razon social
@@ -54,48 +60,45 @@ public class MenuRRHH implements Menu{
         System.out.println();
 
         //persistir
-        clientController.createClient(businessName,cuit,email);
+        //technicianController.createTechnician(businessName,cuit,email);
     }
 
-    private void addServiceToClient(){
-        int clientId=0;
+    private void addServiceToTechnician(){
+        int technicianId=0;
         int serviceId=0;
-        System.out.println("Ingrese el id del cliente a añadir un servicio");
-        //mostrar cliente original
-        clientId=scan.nextInt();
-        Client client=clientController.getClient((long)clientId);
-        System.out.println(client);
+        System.out.println("Ingrese el id del techniciane a añadir un servicio");
+        //mostrar techniciane original
+        technicianId=scan.nextInt();
+        Technician technician=controllerTechnician.getTechnician((long)technicianId);
+        System.out.println(technician);
         //mostrar una lista de todos los servicios
-        listServices();
+        listSpecialities();
         //pedir id del servicio
         System.out.println("Ingrese el id del servicio elegido");
         serviceId=scan.nextInt();
-        Service service=serviceController.getService((long)serviceId);
+        //Service service=serviceController.getService((long)serviceId);
         //crear relacion
-        clientServiceController.createClientService(client,service);
-        /*clientServiceController.createClientService();
-        clientServiceController.addServiceToClient(service,5);
-        clientServiceController.addClientToService(client,5);*/
+        //technicianServiceController.createTechnicianService(technician,service);
         System.out.println("Añadido con éxito");
     }
 
 
 
-    private void removeClient(){
-        int clientId=0;
-        System.out.println("Ingrese el id del cliente a borrar");
-        clientId=scan.nextInt();
-        clientController.deleteClient((long)clientId);
+    private void removeTechnician(){
+        int technicianId=0;
+        System.out.println("Ingrese el id del techniciane a borrar");
+        technicianId=scan.nextInt();
+        controllerTechnician.deleteTechnician((long)technicianId);
     }
 
-    private void updateClient(){
-        int clientId=0;
+    private void updateTechnician(){
+        int technicianId=0;
         String change;
-        System.out.println("Ingrese el id del cliente a modificar");
-        //mostrar cliente original
-        clientId=scan.nextInt();
-        Client client=clientController.getClient((long)clientId);
-        System.out.println(client);
+        System.out.println("Ingrese el id del techniciane a modificar");
+        //mostrar techniciane original
+        technicianId=scan.nextInt();
+        Technician technician=controllerTechnician.getTechnician((long)technicianId);
+        System.out.println(technician);
         //pedir nuevos datos
         //razon social
         do {
@@ -108,7 +111,7 @@ public class MenuRRHH implements Menu{
             change=scan.next();
         }
         System.out.println();
-        client.setBusinessName(change);
+        //technician.setBusinessName(change);
         //CUIT
         do {
             System.out.print("¿Cambiar CUIT? s/n");
@@ -120,7 +123,7 @@ public class MenuRRHH implements Menu{
             change=scan.next();
         }
         System.out.println();
-        client.setCUIT(change);
+        //technician.setCUIT(change);
         //email
         do {
             System.out.print("¿Cambiar email? s/n");
@@ -132,27 +135,27 @@ public class MenuRRHH implements Menu{
             change=scan.next();
         }
         System.out.println();
-        client.setEmail(change);
+        technician.setEmail(change);
         //persistir
-        clientController.updateClient(client);
+        //controllerTechnician.updateTechnician(technician);
     }
 
-    private void listClient(){
-        for (Client c: clientController.getAllClient()){
-            System.out.println(c);
+    private void listTechnician(){
+        for (Technician t: controllerTechnician.getAllTechnician()){
+            System.out.println(t);
         }
     }
 
-    private void listServices(){
-        for (Service s: serviceController.getAllService()){
+    private void listSpecialities(){
+        for (Speciality s: controllerSpeciality.getAllSpeciality()){
             System.out.println(s);
         }
     }
 
-    private void getClient(){
-        int clientId=0;
-        System.out.println("Ingrese el id del cliente");
-        clientId=scan.nextInt();
-        System.out.println(clientController.getClient((long)clientId));
+    private void getTechnician(){
+        int technicianId=0;
+        System.out.println("Ingrese el id del techniciane");
+        technicianId=scan.nextInt();
+        System.out.println(controllerTechnician.getTechnician((long)technicianId));
     }
 }

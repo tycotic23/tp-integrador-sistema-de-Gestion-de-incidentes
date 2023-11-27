@@ -50,7 +50,7 @@ public class Speciality {
     }
 
     public void addTechnician(){
-        
+
     }
 
     public Set<SpecialityTypeProblem> getTypeProblems() {
@@ -61,7 +61,7 @@ public class Speciality {
         this.typeProblems = typeProblems;
     }
 
-    public void addTechnician(Technician technician){
+    public void addTechnician(SpecialityTechnician technician){
         technician.setSpeciality(this);
         this.technicians.add(technician);
     }

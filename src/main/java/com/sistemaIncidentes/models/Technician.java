@@ -18,17 +18,15 @@ public class Technician {
     @OneToMany(mappedBy="technician",fetch = FetchType.EAGER)
     private Set<Incident> incidents=new HashSet<>();
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="speciality_id")
-    private Speciality speciality;
+    @OneToMany(mappedBy="technician",fetch = FetchType.EAGER)
+    private Set<SpecialityTechnician> specialities=new HashSet<>();
 
     public Technician() {
     }
 
-    public Technician(String name, String email, Speciality speciality) {
+    public Technician(String name, String email) {
         this.name = name;
         this.email = email;
-        this.speciality = speciality;
     }
 
     public long getId() {
@@ -59,12 +57,17 @@ public class Technician {
         this.incidents = incidents;
     }
 
-    public Speciality getSpeciality() {
-        return speciality;
+    public Set<SpecialityTechnician> getSpecialities() {
+        return specialities;
     }
 
-    public void setSpeciality(Speciality speciality) {
-        this.speciality = speciality;
+    public void setSpecialities(Set<SpecialityTechnician> specialities) {
+        this.specialities = specialities;
+    }
+
+    public void addSpeciality(SpecialityTechnician speciality){
+        speciality.setTechnician(this);
+        this.specialities.add(speciality);
     }
 
     public void addIncident(Incident incident){
@@ -81,4 +84,6 @@ public class Technician {
                 ", incidents=" + incidents +
                 '}';
     }
+
+
 }
