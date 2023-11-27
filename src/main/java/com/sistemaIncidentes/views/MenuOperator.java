@@ -2,7 +2,6 @@ package com.sistemaIncidentes.views;
 
 import com.sistemaIncidentes.controllers.*;
 import com.sistemaIncidentes.models.Client;
-import com.sistemaIncidentes.models.Service;
 import com.sistemaIncidentes.models.SpecialityTypeProblem;
 import com.sistemaIncidentes.models.Technician;
 
@@ -14,10 +13,10 @@ public class MenuOperator implements Menu {
     private ServiceController serviceController=new ServiceController();
     private ClientServiceController clientServiceController= new ClientServiceController();
     private IncidentController IncidentController = new IncidentController();
-    private ControllerProblem controllerProblem = new ControllerProblem();
-    private ControllerSpeciality controllerSpeciality = new ControllerSpeciality();
-    private ControllerTechnician controllerTechnichian = new ControllerTechnician();
-    private ControllerTypeProblem controllerTypeProblem = new ControllerTypeProblem();
+    private ProblemController controllerProblem = new ProblemController();
+    private SpecialityController controllerSpeciality = new SpecialityController();
+    private TechnicianController controllerTechnichian = new TechnicianController();
+    private TypeProblemController controllerTypeProblem = new TypeProblemController();
     private SpecialityTypeProblem specialityType = new SpecialityTypeProblem();
 
     private Scanner scan = new Scanner (System.in);

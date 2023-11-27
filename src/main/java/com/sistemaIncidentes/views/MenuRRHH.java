@@ -1,7 +1,7 @@
 package com.sistemaIncidentes.views;
 
-import com.sistemaIncidentes.controllers.ControllerSpeciality;
-import com.sistemaIncidentes.controllers.ControllerTechnician;
+import com.sistemaIncidentes.controllers.SpecialityController;
+import com.sistemaIncidentes.controllers.TechnicianController;
 import com.sistemaIncidentes.controllers.SpecialityTechnicianController;
 import com.sistemaIncidentes.models.Technician;
 import com.sistemaIncidentes.models.Speciality;
@@ -9,13 +9,12 @@ import com.sistemaIncidentes.models.Speciality;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class MenuRRHH implements Menu{
 
     private Scanner scan = new Scanner (System.in);
-    private ControllerTechnician controllerTechnician=new ControllerTechnician();
-    private ControllerSpeciality controllerSpeciality=new ControllerSpeciality();
+    private TechnicianController controllerTechnician=new TechnicianController();
+    private SpecialityController controllerSpeciality=new SpecialityController();
     private SpecialityTechnicianController specialityTechnicianController=new SpecialityTechnicianController();
 
     @Override
