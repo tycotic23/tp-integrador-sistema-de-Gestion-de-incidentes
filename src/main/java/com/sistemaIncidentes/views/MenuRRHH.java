@@ -130,8 +130,8 @@ public class MenuRRHH implements Menu{
     private void addSpecialityToTechnician(){
         int technicianId=0;
         int specialityId=0;
-        System.out.println("Ingrese el id del techniciane a añadir un servicio");
-        //mostrar techniciane original
+        System.out.println("Ingrese el id del tecnico a añadir un servicio");
+        //mostrar tecnico original
         technicianId=scan.nextInt();
         Technician technician=controllerTechnician.getTechnician((long)technicianId);
         System.out.println(technician);
@@ -150,7 +150,7 @@ public class MenuRRHH implements Menu{
 
     private void removeTechnician(){
         int technicianId=0;
-        System.out.println("Ingrese el id del techniciane a borrar");
+        System.out.println("Ingrese el id del tecnico a borrar");
         technicianId=scan.nextInt();
         controllerTechnician.deleteTechnician((long)technicianId);
     }
@@ -158,8 +158,8 @@ public class MenuRRHH implements Menu{
     private void updateTechnician(){
         int technicianId=0;
         String change;
-        System.out.println("Ingrese el id del techniciane a modificar");
-        //mostrar techniciane original
+        System.out.println("Ingrese el id del tecnico a modificar");
+        //mostrar tecnico original
         technicianId=scan.nextInt();
         Technician technician=controllerTechnician.getTechnician((long)technicianId);
         System.out.println(technician);

@@ -67,7 +67,7 @@ public class MenuOperator implements Menu {
                 break;
             //dar por finalizado un incidente
             case 6:
-
+                closeIncident();
                 break;
         }
 
@@ -87,6 +87,20 @@ public class MenuOperator implements Menu {
     }
 
 
+
+    private void closeIncident(){
+        int technicianId;
+        int incidentId;
+        String change;
+        //pedir ide del tecnico
+        System.out.println("Ingrese el id del técnico");
+        technicianId=scan.nextInt();
+        //modificar y persistir
+        Technician technician=technicianController.getTechnician((long)technicianId);
+        technicianController.setAvailableForId((long)technicianId,true);
+        incidentController.closeIncident((long)technician.getActiveIncident().getId());
+        System.out.println("cerrado con existo");
+    }
 
 
     private void getClient(){
@@ -203,7 +217,7 @@ public class MenuOperator implements Menu {
                 }while(!other.equals("s") && !other.equals("n"));
             }while(!other.equals("n"));
             System.out.println("Incidente agregado con éxito");
-            //System.out.println("La fecha de resolución estimada es "+ incident.getEstimatedDate());
+            System.out.println("La fecha de resolución estimada es "+ incident.getEstimatedDate());
         }
         catch(Exception e){
             e.printStackTrace();

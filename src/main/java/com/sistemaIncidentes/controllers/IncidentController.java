@@ -67,6 +67,25 @@ public class IncidentController {
 
     }
 
+    public void closeIncident(long id){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            Incident incident = session.get(Incident.class,id);
+            incident.setSolved(true);
+            session.persist(incident);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "successfully updated");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error updating incident");
+        }
+
+    }
+
     public void updateIncident(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
         Session session=sessionFactory.openSession();

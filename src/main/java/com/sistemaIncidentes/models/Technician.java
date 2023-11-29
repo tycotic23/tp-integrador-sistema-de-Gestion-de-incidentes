@@ -144,6 +144,7 @@ public class Technician {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", available='" + available + '\'' +
                 ", incidents=" + incidents +
                 ", specialities=" + getSpecialitiesList() +
                 '}';
@@ -153,6 +154,7 @@ public class Technician {
         return "Technician{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", available='" + available + '\'' +
                 ", incidents=" + incidents +
                 '}';
     }
