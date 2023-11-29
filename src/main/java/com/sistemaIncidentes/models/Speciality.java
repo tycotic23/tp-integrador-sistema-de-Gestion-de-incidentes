@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Speciality {
@@ -59,6 +61,15 @@ public class Speciality {
 
     public void setTypeProblems(Set<SpecialityTypeProblem> typeProblems) {
         this.typeProblems = typeProblems;
+    }
+
+    public boolean hasTypeProblem(long typeProblemId){
+        Set<Long> typeProblems = getTypeProblemId().stream().map(TypeProblem::getId).collect(Collectors.toSet());
+        return typeProblems.contains(typeProblemId);
+    }
+
+    public Set<TypeProblem> getTypeProblemId(){
+        return typeProblems.stream().map(SpecialityTypeProblem::getTypeProblem).collect(Collectors.toSet());
     }
 
     public void addTechnician(SpecialityTechnician technician){

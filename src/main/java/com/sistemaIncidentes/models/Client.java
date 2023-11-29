@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="client")
@@ -86,6 +87,9 @@ public class Client {
         this.incidents.add(incident);
     }
 
+    public Set<Service> getServicesList(){
+        return hiredServices.stream().map(ClientService::getService).collect(Collectors.toSet());
+    }
     @Override
     public String toString() {
         return "Client{" +

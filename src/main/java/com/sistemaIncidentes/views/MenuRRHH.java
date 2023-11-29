@@ -234,7 +234,9 @@ public class MenuRRHH implements Menu{
         System.out.println();
         Speciality speciality = controllerSpeciality.getSpeciality((long)specialityID);
         List<Technician> technicians=controllerTechnician.getAllTechnician();
-        Technician technician=technicians.stream().filter(t -> t.hasSpeciality(speciality.getName())).max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).get();
+        Technician technician=technicians.stream()
+                .filter(t -> t.hasSpeciality(speciality.getName()))
+                .max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).get();
         if(technician!=null && technician.getIncidentsSolvedNumberFromLastNDays(n)!=0){
             System.out.println("El técnico con más incidentes resueltos en los últimos " + n + " días es" + technician);
         }
@@ -259,7 +261,7 @@ public class MenuRRHH implements Menu{
 
     private void getTechnician(){
         int technicianId=0;
-        System.out.println("Ingrese el id del techniciane");
+        System.out.println("Ingrese el id del tecnico");
         technicianId=scan.nextInt();
         System.out.println(controllerTechnician.getTechnician((long)technicianId));
     }

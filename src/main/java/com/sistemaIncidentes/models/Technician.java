@@ -17,6 +17,8 @@ public class Technician {
     private String name;
     private String email;
 
+    private boolean available=true;
+
     @OneToMany(mappedBy="technician",fetch = FetchType.EAGER)
     private Set<Incident> incidents=new HashSet<>();
 
@@ -83,6 +85,10 @@ public class Technician {
         return specialities.contains(specialityName);
     }
 
+    public boolean canResolveTypeProblem(TypeProblem typeProblem){
+        return specialities.stream().anyMatch(s->s.getSpeciality().hasTypeProblem(typeProblem.getId()));
+    }
+
     public void setSpecialities(Set<SpecialityTechnician> specialities) {
         this.specialities = specialities;
     }
@@ -95,6 +101,29 @@ public class Technician {
     public void addIncident(Incident incident){
         incident.setTechnician(this);
         this.incidents.add(incident);
+    }
+
+
+
+    public void closeIncident(){
+        available=true;
+        Incident incident=getActiveIncident();
+        if(incident!=null){
+            getActiveIncident().setSolved(true);
+        }
+        System.out.println("No hay incidentes en curso");
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public Incident getActiveIncident(){
+        return incidents.stream().filter(i->!i.isSolved()).findFirst().orElse(null);
     }
 
     public double getAverage(){

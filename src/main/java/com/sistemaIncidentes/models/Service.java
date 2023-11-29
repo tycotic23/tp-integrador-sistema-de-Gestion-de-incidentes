@@ -69,7 +69,6 @@ public class Service {
         return "Service{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", incidents=" + incidents +
                 '}';
     }
 }

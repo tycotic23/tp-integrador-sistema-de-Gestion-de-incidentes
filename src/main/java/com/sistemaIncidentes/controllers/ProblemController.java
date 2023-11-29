@@ -1,6 +1,6 @@
 package com.sistemaIncidentes.controllers;
 
-import com.sistemaIncidentes.models.Problem;
+import com.sistemaIncidentes.models.*;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 
 public class ProblemController {
-    public void createProblem(String businessName, String CUIT, String email){
+    public void createProblem(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Problem.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -23,6 +23,27 @@ public class ProblemController {
         }catch (Exception e){
             e.printStackTrace();
             System.out.println( "Error in creation of problem");
+        }
+
+
+    }
+
+    public void createProblem(Problem problem,TypeProblem typeProblem, Incident incident){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Problem.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+
+            session.beginTransaction();
+            typeProblem.addProblem(problem);
+            incident.addProblem(problem);
+            session.persist(problem);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "successfully created");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error in creation of client service");
         }
 
 

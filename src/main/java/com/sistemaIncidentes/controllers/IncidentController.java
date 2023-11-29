@@ -1,7 +1,5 @@
 package com.sistemaIncidentes.controllers;
-import com.sistemaIncidentes.models.Client;
-import com.sistemaIncidentes.models.Incident;
-import com.sistemaIncidentes.models.Service;
+import com.sistemaIncidentes.models.*;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -25,6 +23,29 @@ public class IncidentController {
             System.out.println( "Error in creation of client");
         }
 
+
+    }
+
+    public Incident createIncident(Client client, Service service, Technician technician){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            Incident incident=new Incident();
+            session.beginTransaction();
+            client.addIncident(incident);
+            service.addIncident(incident);
+            technician.addIncident(incident);
+            session.persist(incident);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "successfully created");
+            return incident;
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error in creation of client service");
+        }
+        return null;
 
     }
 

@@ -7,6 +7,12 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+
+
+
+
+
+
 @Entity
 public class Incident {
 
@@ -93,7 +99,17 @@ public class Incident {
     }
 
     public double getTime() {
+
         return time;
+    }
+
+    public LocalDate getEstimatedDate(){
+        return date.plusDays(getAllProblemsTime().longValue());
+    }
+
+    public Double getAllProblemsTime(){
+        return problems.stream().map(Problem::getEstimatedTime)
+                .reduce(Double::sum).orElse(null);
     }
 
     public void setTime(double time) {

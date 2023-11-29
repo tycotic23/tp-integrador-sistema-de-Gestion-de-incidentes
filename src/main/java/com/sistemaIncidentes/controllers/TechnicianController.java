@@ -85,6 +85,22 @@ public class TechnicianController {
         return null;
     }
 
+    public void setAvailableForId(long id, boolean available){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            Technician technician = session.get(Technician.class,id);
+            technician.setAvailable(available);
+            session.getTransaction().commit();
+            sessionFactory.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error updating technician");
+        }
+    }
+
 
     public List<Technician> getAllTechnician(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
