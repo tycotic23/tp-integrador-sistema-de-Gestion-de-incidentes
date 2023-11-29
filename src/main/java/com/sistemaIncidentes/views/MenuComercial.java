@@ -65,7 +65,7 @@ public class MenuComercial implements Menu{
         //pedir nuevos datos
         //razon social
         System.out.print("Razon social: ");
-        String businessName=scan.next();
+        String businessName=scan.nextLine();
         System.out.println();
         //CUIT
         System.out.print("CUIT: ");
