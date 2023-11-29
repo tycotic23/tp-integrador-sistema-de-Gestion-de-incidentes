@@ -19,10 +19,10 @@ public class ProblemController {
             session.persist(problem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Correctamente creado el problema");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of problem");
+            System.out.println( "Error al crear el problema");
         }
 
 
@@ -40,10 +40,10 @@ public class ProblemController {
             session.persist(problem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Correctamente creado el problema");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of client service");
+            System.out.println( "Error en la creacion del problema");
         }
 
 
@@ -59,10 +59,10 @@ public class ProblemController {
             session.remove(problem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "Correctamente eliminado el problema");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting problem");
+            System.out.println( "Error en la elimizacion del problema");
         }
 
     }
@@ -78,10 +78,10 @@ public class ProblemController {
             session.persist(problem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correctamente actualizado el problema");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating client");
+            System.out.println( "Error al actualizar el problema");
         }
 
     }
@@ -102,7 +102,7 @@ public class ProblemController {
             e.printStackTrace();
 
         }
-        System.out.println( "Error updating problem");
+        System.out.println( "Error al obtener el problema desde la base de datos");
         return null;
     }
 
@@ -115,19 +115,13 @@ public class ProblemController {
             CriteriaQuery<Problem> cq=session.getCriteriaBuilder().createQuery(Problem.class);
             cq.from(Problem.class);
             List<Problem> problems=session.createQuery(cq).getResultList();
-            /*for (Client c:clients){
-                System.out.println("Client ID: "+c.getId());
-                System.out.println("Email: "+c.getEmail());
-                System.out.println("Business Name: "+c.getBusinessName());
-                System.out.println("CUIT: "+c.getCUIT());
-            }*/
             sessionFactory.close();
             return problems;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error reading problems");
+            System.out.println( "Error al crear lista de problemas");
         }
-        System.out.println( "Finished problems list");
+        System.out.println( "Finalizada lista de problemas");
         return null;
     }
 }

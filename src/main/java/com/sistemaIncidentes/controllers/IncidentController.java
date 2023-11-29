@@ -7,24 +7,6 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.List;
 public class IncidentController {
-    public void createIncident(Service service, Client client ){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            Incident incident =new Incident();
-            session.beginTransaction();
-            session.persist(incident);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "successfully created");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error in creation of client");
-        }
-
-
-    }
 
     public Incident createIncident(Client client, Service service, Technician technician){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
@@ -39,11 +21,11 @@ public class IncidentController {
             session.persist(incident);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Correctamente creado el incidente");
             return incident;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of client service");
+            System.out.println( "Error al crear el incidente");
         }
         return null;
 
@@ -59,10 +41,10 @@ public class IncidentController {
             session.remove(incident);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "Correctamente eliminado el incidente");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting incident");
+            System.out.println( "Error al eliminar el cliente");
         }
 
     }
@@ -78,10 +60,10 @@ public class IncidentController {
             session.persist(incident);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correctamente finalizado el incidente");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating incident");
+            System.out.println( "Error al finalizar el incidente");
         }
 
     }
@@ -98,10 +80,10 @@ public class IncidentController {
             session.persist(incident);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correcamente actualizado el incidente");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating incident");
+            System.out.println( "Error al intentar actualizar el incidente");
         }
 
     }
@@ -119,8 +101,9 @@ public class IncidentController {
         }catch (Exception e){
             e.printStackTrace();
 
+
         }
-        System.out.println( "Error updating incident");
+        System.out.println( "Error al intentar obtener incidente en la base de datos");
         return null;
     }
 
@@ -133,19 +116,13 @@ public class IncidentController {
             CriteriaQuery <Incident> cq=session.getCriteriaBuilder().createQuery(Incident.class);
             cq.from(Incident.class);
             List<Incident> incidents=session.createQuery(cq).getResultList();
-            /*for (Client c:clients){
-                System.out.println("Client ID: "+c.getId());
-                System.out.println("Email: "+c.getEmail());
-                System.out.println("Business Name: "+c.getBusinessName());
-                System.out.println("CUIT: "+c.getCUIT());
-            }*/
             sessionFactory.close();
             return incidents;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error reading incidents");
+            System.out.println( "Error al leer los incidentes desde la base de datos");
         }
-        System.out.println( "Finished incident list");
+        System.out.println( "Finalizada lista de incidentes");
         return null;
     }
 }

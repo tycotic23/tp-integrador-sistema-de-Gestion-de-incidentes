@@ -10,25 +10,6 @@ import java.util.List;
 
 public class SpecialityTechnicianController {
 
-    public void createSpecialityTechnician(){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTechnician.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            SpecialityTechnician specialityTechnician=new SpecialityTechnician();
-            session.beginTransaction();
-            session.persist(specialityTechnician);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "successfully created");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error in creation of client service");
-        }
-
-
-    }
-
     public void createSpecialityTechnician(Speciality speciality, Technician technician){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTechnician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
@@ -41,10 +22,10 @@ public class SpecialityTechnicianController {
             session.persist(specialityTechnician);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Correctamente creada la especialidad en el tecnico");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of client service");
+            System.out.println( "Error en la creacion de la especialidad en el tecnico");
         }
 
 
@@ -60,10 +41,10 @@ public class SpecialityTechnicianController {
             session.remove(specialityTechnician);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "Correctamente creada la especialidad en el tecnico");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting client service");
+            System.out.println( "Error en la eliminacion de la especialidad en el tecnico");
         }
 
     }
@@ -74,61 +55,16 @@ public class SpecialityTechnicianController {
 
         try{
             session.beginTransaction();
-            //SpecialityTechnician specialityTechnician = session.get(SpecialityTechnician.class,id);
-            //specialityTechnician.setCUIT(CUIT);
-            //specialityTechnician.setEmail(email);
-            //specialityTechnician.setBusinessName(businessName);
             session.persist(specialityTechnician);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correcamente actualizada la especialidad del tecnico");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating client service");
+            System.out.println( "Error en la actualizacion de la especialidad del tecnico");
         }
 
     }
-
-    /*public void addClientToService(Client client,long idService){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTechnician.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            SpecialityTechnician specialityTechnician = session.get(SpecialityTechnician.class,idService);
-            client.addService(specialityTechnician);
-            //specialityTechnician.setCUIT(CUIT);
-            //specialityTechnician.setEmail(email);
-            //specialityTechnician.setBusinessName(businessName);
-            session.persist(specialityTechnician);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "successfully updated");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error updating client service");
-        }
-
-    }
-
-    public void addServiceToClient(Service service, long idService){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTechnician.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            SpecialityTechnician specialityTechnician = session.get(SpecialityTechnician.class,idService);
-            service.addClient(specialityTechnician);
-            session.persist(specialityTechnician);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "successfully updated");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error updating client service");
-        }
-
-    }*/
 
     public SpecialityTechnician getSpecialityTechnician(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTechnician.class).buildSessionFactory();
@@ -143,7 +79,7 @@ public class SpecialityTechnicianController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println( "Error updating client service");
+        System.out.println( "Error en la obtencion de la especialidad del tecnico");
         return null;
     }
 
@@ -160,9 +96,9 @@ public class SpecialityTechnicianController {
             return clientservices;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error reading clients services");
+            System.out.println( "Error en la obtencion de la especialidades de los tecnicos en la base de datos");
         }
-        System.out.println( "Finished client service list");
+        System.out.println( "Finizada la lista de especialidades de los tecnicos en la base de datos");
         return null;
     }
 }

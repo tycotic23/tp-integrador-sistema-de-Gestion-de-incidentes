@@ -20,10 +20,10 @@ public class ServiceController {
             session.persist(service);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Correctamente creado el servicio");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of service");
+            System.out.println( "Error en la eliminacion del servicio");
         }
 
 
@@ -39,10 +39,10 @@ public class ServiceController {
             session.remove(service);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "Correctamente eliminado el servicio");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting service");
+            System.out.println( "Error al eliminar el servicio");
         }
 
     }
@@ -58,10 +58,10 @@ public class ServiceController {
             session.persist(service);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println(  "successfully updated");
+            System.out.println(  "Correcamente actualizado el servicio");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println(  "Error updating service");
+            System.out.println(  "Error al actualizar el servicio");
         }
 
     }
@@ -78,7 +78,7 @@ public class ServiceController {
             return service;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println(  "Error updating service");
+            System.out.println(  "Error en obtener el servicio desde la base de datos");
         }
 
         return null;
@@ -93,17 +93,13 @@ public class ServiceController {
             CriteriaQuery<Service> cq=session.getCriteriaBuilder().createQuery(Service.class);
             cq.from(Service.class);
             List<Service> services=session.createQuery(cq).getResultList();
-            /*for (Service c:services){
-                System.out.println("Service ID: "+c.getId());
-                System.out.println("Name: "+c.getName());
-            }*/
             sessionFactory.close();
             return services;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println(  "Error reading services");
+            System.out.println(  "Error en la obtencion de la lista de servicios");
         }
-        System.out.println(  "Finished service list");
+        System.out.println(  "Finalizada lista de servicios");
         return null;
     }
 }

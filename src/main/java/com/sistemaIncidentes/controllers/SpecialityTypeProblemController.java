@@ -20,10 +20,10 @@ public class SpecialityTypeProblemController {
             session.persist(specialityTypeProblem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Correctamente creado el tipo de problema del tipo de especialidad");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of speciality type problem");
+            System.out.println( "Error en la creacion de tipo de problema para la especialidad");
         }
 
 
@@ -39,10 +39,10 @@ public class SpecialityTypeProblemController {
             session.remove(specialityTypeProblem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "Correctamente removido el tipo de problema para la especialidad ");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting speciality type problem");
+            System.out.println( "Error en la eliminacion del tipo de problema para la especialidad");
         }
 
     }
@@ -60,31 +60,14 @@ public class SpecialityTypeProblemController {
             session.persist(specialityTypeProblem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correctamente actualizado el tipo de problema para la especialidad");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating speciality type problem");
+            System.out.println( "Error al intentar actualizar el tipo de problema para la especialidad");
         }
 
     }
 
-    public SpecialityTypeProblem getService(long id){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTypeProblem.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            SpecialityTypeProblem specialityTypeProblem = session.get(SpecialityTypeProblem.class,id);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            return specialityTypeProblem;
-        }catch (Exception e){
-            e.printStackTrace();
-
-        }
-        System.out.println( "Error updating speciality type problem");
-        return null;
-    }
 
     public List<SpecialityTypeProblem> getAllSpecialityTypeProblem(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTypeProblem.class).buildSessionFactory();
@@ -95,19 +78,13 @@ public class SpecialityTypeProblemController {
             CriteriaQuery<SpecialityTypeProblem> cq=session.getCriteriaBuilder().createQuery(SpecialityTypeProblem.class);
             cq.from(SpecialityTypeProblem.class);
             List<SpecialityTypeProblem> specialityTypeProblems =session.createQuery(cq).getResultList();
-            /*for (Client c:clients){
-                System.out.println("Client ID: "+c.getId());
-                System.out.println("Email: "+c.getEmail());
-                System.out.println("Business Name: "+c.getBusinessName());
-                System.out.println("CUIT: "+c.getCUIT());
-            }*/
             sessionFactory.close();
             return specialityTypeProblems;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error reading speciality type problems");
+            System.out.println( "Error en la creacion de lista de tipos de problema para especialidad");
         }
-        System.out.println( "Finished service list");
+        System.out.println( "Finalizada lista de tipos de problema para especialidad");
         return null;
     }
 

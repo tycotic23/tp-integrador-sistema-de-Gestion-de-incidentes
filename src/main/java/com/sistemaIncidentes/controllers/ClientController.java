@@ -20,10 +20,10 @@ public class ClientController {
             session.persist(client);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Cliente creado correctamente");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of client");
+            System.out.println( "Error al intentar crear el cliente");
         }
 
 
@@ -39,34 +39,14 @@ public class ClientController {
             session.remove(client);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "correctamente borrado el cliente");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting client");
+            System.out.println( "Error al intentar borrar el cliente");
         }
 
     }
 
-    public void updateClient(long id,String businessName, String CUIT, String email){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            Client client = session.get(Client.class,id);
-            client.setCUIT(CUIT);
-            client.setEmail(email);
-            client.setBusinessName(businessName);
-            session.persist(client);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "successfully updated");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error updating client");
-        }
-
-    }
 
     public void updateClient(Client clientUpdated){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
@@ -77,10 +57,10 @@ public class ClientController {
             session.persist(clientUpdated);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "correctamente actualizado el cliente");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating client");
+            System.out.println( "Error al intentar actualizar el cliente");
         }
 
     }
@@ -99,7 +79,7 @@ public class ClientController {
             e.printStackTrace();
 
         }
-        System.out.println( "Error updating client");
+        System.out.println( "Error al intentar obtener el cliente desde la base de datos");
         return null;
     }
 
@@ -112,19 +92,13 @@ public class ClientController {
             CriteriaQuery <Client> cq=session.getCriteriaBuilder().createQuery(Client.class);
             cq.from(Client.class);
             List<Client> clients=session.createQuery(cq).getResultList();
-            /*for (Client c:clients){
-                System.out.println("Client ID: "+c.getId());
-                System.out.println("Email: "+c.getEmail());
-                System.out.println("Business Name: "+c.getBusinessName());
-                System.out.println("CUIT: "+c.getCUIT());
-            }*/
             sessionFactory.close();
             return clients;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error reading clients");
+            System.out.println( "Error al crear lista de clientes");
         }
-        System.out.println( "Finished client list");
+        System.out.println( "Finalizada lista de clientes");
         return null;
     }
 }

@@ -19,10 +19,10 @@ public class SpecialityController {
             session.persist(speciality);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Correctamente creada la especialidad");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of speciality");
+            System.out.println( "Error en la creacion de la especialidad");
         }
 
 
@@ -38,10 +38,10 @@ public class SpecialityController {
             session.remove(speciality);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "Correctamente eliminada la especialidad");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting speciality");
+            System.out.println( "Error en la eliminacion de la especialidad");
         }
 
     }
@@ -59,10 +59,10 @@ public class SpecialityController {
             session.persist(speciality);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correctamente actualizada la especialidad");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating speciality");
+            System.out.println( "Error en la actualizacion de la especialidad");
         }
 
     }
@@ -83,7 +83,7 @@ public class SpecialityController {
             e.printStackTrace();
 
         }
-        System.out.println( "Error updating speciality");
+        System.out.println( "Error en la obtencion de la especialidad");
         return null;
     }
 
@@ -96,19 +96,13 @@ public class SpecialityController {
             CriteriaQuery<Speciality> cq=session.getCriteriaBuilder().createQuery(Speciality.class);
             cq.from(Speciality.class);
             List<Speciality> specialities =session.createQuery(cq).getResultList();
-            /*for (Client c:clients){
-                System.out.println("Client ID: "+c.getId());
-                System.out.println("Email: "+c.getEmail());
-                System.out.println("Business Name: "+c.getBusinessName());
-                System.out.println("CUIT: "+c.getCUIT());
-            }*/
             sessionFactory.close();
             return specialities;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error reading specialities");
+            System.out.println( "Error en la obtencion de la lista de especialidades");
         }
-        System.out.println( "Finished speciality list");
+        System.out.println( "Finalizada la lista de especialidades");
         return null;
     }
 

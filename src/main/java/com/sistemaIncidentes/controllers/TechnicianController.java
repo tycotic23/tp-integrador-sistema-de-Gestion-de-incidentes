@@ -18,10 +18,10 @@ public class TechnicianController {
             session.persist(technician);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Tecnico correctamente creado");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of technichian");
+            System.out.println( "Error en la creacion del tecnico");
         }
 
 
@@ -37,10 +37,10 @@ public class TechnicianController {
             session.remove(technician);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "Correctamente eliminado el tecnico");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting technichian");
+            System.out.println( "Error en la eliminacion del tecnico");
         }
 
     }
@@ -58,10 +58,10 @@ public class TechnicianController {
             session.persist(technician);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correctamente actualizado el tecnico");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating technichian");
+            System.out.println( "Error en la actualizacion del tecnico");
         }
 
     }
@@ -81,7 +81,7 @@ public class TechnicianController {
             e.printStackTrace();
 
         }
-        System.out.println( "Error updating technician");
+        System.out.println( "Error en la obtencion del tecnico");
         return null;
     }
 
@@ -97,7 +97,7 @@ public class TechnicianController {
             sessionFactory.close();
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating technician");
+            System.out.println( "Error en la obtencion del estado del tecnico");
         }
     }
 
@@ -115,9 +115,9 @@ public class TechnicianController {
             return technicians;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error reading technichian");
+            System.out.println( "Error al realizar la lista de tecnico desde la base de datos");
         }
-        System.out.println( "Finished technician list");
+        System.out.println( "Finalizada lista de tecnicos");
         return null;
     }
 

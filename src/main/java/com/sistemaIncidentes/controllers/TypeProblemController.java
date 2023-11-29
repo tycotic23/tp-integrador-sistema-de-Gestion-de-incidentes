@@ -20,10 +20,10 @@ public class TypeProblemController {
             session.persist(typeProblem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Correctamente creado el tipo de problema");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of type problem");
+            System.out.println( "Error en la creaciond el tipo de problema");
         }
 
 
@@ -39,10 +39,10 @@ public class TypeProblemController {
             session.remove(typeProblem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "Corretamente eliminado el tipo de problema");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting type problem");
+            System.out.println( "Error en la eliminacion del tipo de problema");
         }
 
     }
@@ -60,10 +60,10 @@ public class TypeProblemController {
             session.persist(typeProblem);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correctamente actualizado el tipo de problema");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating type problem");
+            System.out.println( "Error en la actualizacion del tipo de problema");
         }
 
     }
@@ -84,7 +84,7 @@ public class TypeProblemController {
             e.printStackTrace();
 
         }
-        System.out.println( "Error updating type problem");
+        System.out.println( "Error en la obtencion del tipo de problema");
         return null;
     }
 
@@ -97,19 +97,13 @@ public class TypeProblemController {
             CriteriaQuery<TypeProblem> cq=session.getCriteriaBuilder().createQuery(TypeProblem.class);
             cq.from(TypeProblem.class);
             List<TypeProblem> typeProblems =session.createQuery(cq).getResultList();
-            /*for (Client c:clients){
-                System.out.println("Client ID: "+c.getId());
-                System.out.println("Email: "+c.getEmail());
-                System.out.println("Business Name: "+c.getBusinessName());
-                System.out.println("CUIT: "+c.getCUIT());
-            }*/
             sessionFactory.close();
             return typeProblems;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error reading type problems");
+            System.out.println( "Error al crear lista de tipos de problemas desde la base de datos");
         }
-        System.out.println( "Finished type problem list");
+        System.out.println( "Finalizada lista de tipos de problemas");
         return null;
     }
 

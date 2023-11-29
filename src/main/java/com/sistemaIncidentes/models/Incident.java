@@ -84,15 +84,6 @@ public class Incident {
         this.problems = problems;
     }
 
-    /*public IncidentState getIncidentState() {
-        return incidentState;
-    }
-
-    public void setIncidentState(IncidentState incidentState) {
-        this.incidentState = incidentState;
-        this.incidentState.setIncident(this);
-    }*/
-
     public void addProblem(Problem problem) {
         problem.setIncident(this);
         this.problems.add(problem);
@@ -115,14 +106,6 @@ public class Incident {
     public void setTime(double time) {
         this.time = time;
     }
-
-    /*public double getTime(){
-        return this.incidentState.getTime();
-    }
-
-    public void closeIncident(double timeInHours){
-        this.incidentState.close(timeInHours);
-    }*/
 
     public boolean isSolved() {
         return solved;

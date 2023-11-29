@@ -61,18 +61,17 @@ public class ClientView {
         //crear la relacion entre tecnico e incidente (controlador del incidente)
 
         //menu: cerrar incidente
-        //en tecnico pasar su incidente a null
         //mandar notificacion al tecnico
         Scanner scan = new Scanner (System.in);
         int option=0;
         Menu menu=new MenuComercial();
         //el menu cambia segun el tipo de usuario
         do {
-            System.out.println("¿Qué tipo de usuario es?");
+            System.out.println("¿Qué tipo de usuario es? ");
             System.out.println("Elija una opcion: ");
-            System.out.println("1-RRHH");
-            System.out.println("2-Comercial");
-            System.out.println("3-Mesa de ayuda");
+            System.out.println("1-RRHH ");
+            System.out.println("2-Comercial ");
+            System.out.println("3-Mesa de ayuda ");
             option = scan.nextInt();
             switch (option) {
                 case 1:
@@ -86,7 +85,6 @@ public class ClientView {
                     break;
             }
         }while(option<1 || option>3);
-
         String fin;
         do{
             //imprimir menu

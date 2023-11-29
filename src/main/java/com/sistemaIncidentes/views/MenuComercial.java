@@ -16,12 +16,12 @@ public class MenuComercial implements Menu{
     private Scanner scan = new Scanner (System.in);
     @Override
     public void printMenu() {
-        System.out.println("1-Ver todos los clientes");
-        System.out.println("2-Ver un cliente");
-        System.out.println("3-Borrar un cliente");
-        System.out.println("4-Actualizar un cliente");
-        System.out.println("5-Dar alta de un cliente");
-        System.out.println("6-Contratar servicio para cliente");
+        System.out.println("1-Ver todos los clientes ");
+        System.out.println("2-Ver un cliente ");
+        System.out.println("3-Borrar un cliente ");
+        System.out.println("4-Actualizar un cliente ");
+        System.out.println("5-Dar alta de un cliente ");
+        System.out.println("6-Contratar servicio para cliente ");
     }
 
     @Override
@@ -48,11 +48,11 @@ public class MenuComercial implements Menu{
             case 4:
                 updateClient();
                 break;
-            //alta de cliente
+            //Alta de cliente
             case 5:
                 addClient();
                 break;
-            //darle un servicio a un cliente
+            //Darle un servicio a un cliente
             case 6:
                 addServiceToClient();
                 break;
@@ -96,10 +96,7 @@ public class MenuComercial implements Menu{
         Service service=serviceController.getService((long)serviceId);
         //crear relacion
         clientServiceController.createClientService(client,service);
-        /*clientServiceController.createClientService();
-        clientServiceController.addServiceToClient(service,5);
-        clientServiceController.addClientToService(client,5);*/
-        System.out.println("Añadido con éxito");
+        System.out.println("Añadido con éxito el servicio");
     }
 
 
@@ -122,19 +119,19 @@ public class MenuComercial implements Menu{
         //pedir nuevos datos
         //razon social
         do {
-            System.out.print("¿Cambiar razón social? s/n");
+            System.out.print("¿Cambiar razón social? s/n ");
             change=scan.next();
         }while(!change.equals("s") && !change.equals("n"));
         System.out.println();
         if(change.equals("s")){
             System.out.print("Nueva razon social: ");
-            change=scan.next();
+            change=scan.nextLine();
         }
         System.out.println();
         client.setBusinessName(change);
         //CUIT
         do {
-            System.out.print("¿Cambiar CUIT? s/n");
+            System.out.print("¿Cambiar CUIT? s/n ");
             change=scan.next();
         }while(!change.equals("s") && !change.equals("n"));
         System.out.println();
@@ -146,7 +143,7 @@ public class MenuComercial implements Menu{
         client.setCUIT(change);
         //email
         do {
-            System.out.print("¿Cambiar email? s/n");
+            System.out.print("¿Cambiar email? s/n ");
             change=scan.next();
         }while(!change.equals("s") && !change.equals("n"));
         System.out.println();
@@ -174,7 +171,7 @@ public class MenuComercial implements Menu{
 
     private void getClient(){
         int clientId=0;
-        System.out.println("Ingrese el id del cliente");
+        System.out.println("Ingrese el id del cliente ");
         clientId=scan.nextInt();
         System.out.println(clientController.getClient((long)clientId));
     }

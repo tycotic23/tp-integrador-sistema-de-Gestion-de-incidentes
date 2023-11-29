@@ -19,16 +19,16 @@ public class MenuRRHH implements Menu{
 
     @Override
     public void printMenu() {
-        System.out.println("1-Ver todos los técnicos");
-        System.out.println("2-Ver un técnico");
-        System.out.println("3-Dar de baja un técnico");
-        System.out.println("4-Actualizar un técnico");
-        System.out.println("5-Dar alta de un técnico");
-        System.out.println("6-Asignar nueva especialidad a un técnico");
-        System.out.println("7-Crear informe de incidentes");
-        System.out.println("8-Consultar técnico con más incidentes resueltos en los últimos n días");
-        System.out.println("9-Consultar técnico con más incidentes resueltos de cierta especialidad en los últimos n días");
-        System.out.println("10-Consultar técnico más rápido");
+        System.out.println("1-Ver todos los técnicos ");
+        System.out.println("2-Ver un técnico ");
+        System.out.println("3-Dar de baja un técnico ");
+        System.out.println("4-Actualizar un técnico ");
+        System.out.println("5-Dar alta de un técnico ");
+        System.out.println("6-Asignar una nueva especialidad a un técnico ");
+        System.out.println("7-Crear informe de incidentes ");
+        System.out.println("8-Consultar técnico con más incidentes resueltos con respecto a un numero especifico de dias ");
+        System.out.println("9-Consultar técnico con más incidentes resueltos de cierta especialidad con respecto a un numero especifico de dias ");
+        System.out.println("10-Consultar técnico más rápido en la resolucion de incidentes");
     }
 
     @Override
@@ -90,7 +90,7 @@ public class MenuRRHH implements Menu{
             System.out.println("El técnico con mejor promedio de tiempo al resolver incidentes es "+fasterTechinician);
         }
         else{
-            System.out.println("No hay suficientes datos");
+            System.out.println("No hay suficientes datos ");
         }
     }
 
@@ -100,7 +100,7 @@ public class MenuRRHH implements Menu{
         //pedir nuevos datos
         //nombre
         System.out.print("Nombre: ");
-        String name=scan.next();
+        String name=scan.nextLine();
         System.out.println();
         //email
         System.out.print("Email: ");
@@ -121,7 +121,7 @@ public class MenuRRHH implements Menu{
             specialityTechnicianController.createSpecialityTechnician(controllerSpeciality.getSpeciality((long)speciality),technician);
             //preguntar si desea agregar otra
             do {
-                System.out.print("¿Desea agregar otra? s/n");
+                System.out.print("¿Desea agregar otra? s/n ");
                 other=scan.next();
             }while(!other.equals("s") && !other.equals("n"));
         }while(!other.equals("n"));
@@ -130,7 +130,7 @@ public class MenuRRHH implements Menu{
     private void addSpecialityToTechnician(){
         int technicianId=0;
         int specialityId=0;
-        System.out.println("Ingrese el id del tecnico a añadir un servicio");
+        System.out.println("Ingrese el id del tecnico a añadir un servicio ");
         //mostrar tecnico original
         technicianId=scan.nextInt();
         Technician technician=controllerTechnician.getTechnician((long)technicianId);
@@ -138,19 +138,19 @@ public class MenuRRHH implements Menu{
         //mostrar una lista de todos los servicios
         listSpecialities();
         //pedir id del servicio
-        System.out.println("Ingrese el id del servicio elegido");
+        System.out.println("Ingrese el id del servicio elegido ");
         specialityId=scan.nextInt();
         Speciality speciality=controllerSpeciality.getSpeciality((long)specialityId);
         //crear relacion
         specialityTechnicianController.createSpecialityTechnician(speciality,technician);
-        System.out.println("Añadido con éxito");
+        System.out.println("Añadido con éxito ");
     }
 
 
 
     private void removeTechnician(){
         int technicianId=0;
-        System.out.println("Ingrese el id del tecnico a borrar");
+        System.out.println("Ingrese el id del tecnico a borrar ");
         technicianId=scan.nextInt();
         controllerTechnician.deleteTechnician((long)technicianId);
     }
@@ -158,7 +158,7 @@ public class MenuRRHH implements Menu{
     private void updateTechnician(){
         int technicianId=0;
         String change;
-        System.out.println("Ingrese el id del tecnico a modificar");
+        System.out.println("Ingrese el id del tecnico a modificar ");
         //mostrar tecnico original
         technicianId=scan.nextInt();
         Technician technician=controllerTechnician.getTechnician((long)technicianId);
@@ -166,19 +166,19 @@ public class MenuRRHH implements Menu{
         //pedir nuevos datos
         //razon social
         do {
-            System.out.print("¿Cambiar razón social? s/n");
+            System.out.print("¿Cambiar razón social? s/n ");
             change=scan.next();
         }while(!change.equals("s") && !change.equals("n"));
         System.out.println();
         if(change.equals("s")){
             System.out.print("Nueva razon social: ");
-            change=scan.next();
+            change=scan.nextLine();
         }
         System.out.println();
         //technician.setBusinessName(change);
         //CUIT
         do {
-            System.out.print("¿Cambiar CUIT? s/n");
+            System.out.print("¿Cambiar CUIT? s/n ");
             change=scan.next();
         }while(!change.equals("s") && !change.equals("n"));
         System.out.println();
@@ -190,7 +190,7 @@ public class MenuRRHH implements Menu{
         //technician.setCUIT(change);
         //email
         do {
-            System.out.print("¿Cambiar email? s/n");
+            System.out.print("¿Cambiar email? s/n ");
             change=scan.next();
         }while(!change.equals("s") && !change.equals("n"));
         System.out.println();
@@ -218,7 +218,7 @@ public class MenuRRHH implements Menu{
         List<Technician> technicians=controllerTechnician.getAllTechnician();
         Technician technician= technicians.stream().max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).orElse(null);
         if(technician!=null){
-            System.out.println("El técnico con más incidentes resueltos en los últimos "+n+" días es" + technician);
+            System.out.println("El técnico con más incidentes resueltos en los últimos "+n+" días es " + technician);
         }
     }
 
@@ -238,10 +238,10 @@ public class MenuRRHH implements Menu{
                 .filter(t -> t.hasSpeciality(speciality.getName()))
                 .max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).get();
         if(technician!=null && technician.getIncidentsSolvedNumberFromLastNDays(n)!=0){
-            System.out.println("El técnico con más incidentes resueltos en los últimos " + n + " días es" + technician);
+            System.out.println("El técnico con más incidentes resueltos en los últimos " + n + " días es " + technician);
         }
         else{
-            System.out.println("No hay suficientes datos de esa fecha");
+            System.out.println("No hay suficientes datos de esa fecha ");
         }
 
 
@@ -261,7 +261,7 @@ public class MenuRRHH implements Menu{
 
     private void getTechnician(){
         int technicianId=0;
-        System.out.println("Ingrese el id del tecnico");
+        System.out.println("Ingrese el id del tecnico ");
         technicianId=scan.nextInt();
         System.out.println(controllerTechnician.getTechnician((long)technicianId));
     }

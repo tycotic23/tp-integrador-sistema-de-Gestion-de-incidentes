@@ -27,12 +27,12 @@ public class MenuOperator implements Menu {
     private Scanner scan = new Scanner (System.in);
     @Override
     public void printMenu() {
-        System.out.println("1-Ver todos los clientes");
-        System.out.println("2-Ver todos los tecnicos");
-        System.out.println("3-ver tecnicos disponibles para x problema");
-        System.out.println("4-ver datos del cliente");
-        System.out.println("5-registrar incidente");
-        System.out.println("6-dar por finalizado un incidente");
+        System.out.println("1-Ver todos los clientes ");
+        System.out.println("2-Ver todos los tecnicos ");
+        System.out.println("3-ver tecnicos disponibles para un problema ");
+        System.out.println("4-ver datos del cliente ");
+        System.out.println("5-registrar incidente ");
+        System.out.println("6-dar por finalizado un incidente ");
     }
 
     @Override
@@ -93,19 +93,19 @@ public class MenuOperator implements Menu {
         int incidentId;
         String change;
         //pedir ide del tecnico
-        System.out.println("Ingrese el id del técnico");
+        System.out.println("Ingrese el id del técnico ");
         technicianId=scan.nextInt();
         //modificar y persistir
         Technician technician=technicianController.getTechnician((long)technicianId);
         technicianController.setAvailableForId((long)technicianId,true);
         incidentController.closeIncident((long)technician.getActiveIncident().getId());
-        System.out.println("cerrado con existo");
+        System.out.println("cerrado con existo ");
     }
 
 
     private void getClient(){
         int clientId=0;
-        System.out.println("Ingrese el id del cliente");
+        System.out.println("Ingrese el id del cliente ");
         clientId=scan.nextInt();
         System.out.println(clientController.getClient((long)clientId));
     }
@@ -113,7 +113,7 @@ public class MenuOperator implements Menu {
         int technicianId=0;
         int problemId=0;
 
-        System.out.println("Ingrese el del tipo de problema");
+        System.out.println("Ingrese el del tipo de problema ");
         listTypeProblems();
         problemId=scan.nextInt();
         List<Technician> technicians=getTechnicianForTypeProblems((long)problemId);
@@ -154,7 +154,7 @@ public class MenuOperator implements Menu {
     private void registerIncident(){
         //pedir datos del usuario (razon y cuit)
         System.out.print("Ingrese la razón social: ");
-        String business=scan.next();
+        String business=scan.nextLine();
         System.out.println();
         System.out.print("Ingrese el cuit/cuil: ");
         String cuit=scan.next();
@@ -199,12 +199,12 @@ public class MenuOperator implements Menu {
             String other;
             do{
                 System.out.print("Describa su problema: ");
-                problema=scan.next();
+                problema=scan.nextLine();
                 System.out.println();
                 System.out.print("¿Tiempo estimado? Recuerde que el tiempo máximo es "+typeProblem.getMaxTime()+" :");
                 time= scan.nextDouble();
                 System.out.println();
-                System.out.print("Incerte complejidad: 0=simple 1=complejo ");
+                System.out.print("Incerte complejidad: 0 =simple 1 =complejo ");
                 complex=scan.nextInt()!=0;
                 System.out.println();
                 //persistir la especialidad y crear la relacion
@@ -212,16 +212,16 @@ public class MenuOperator implements Menu {
                 problemController.createProblem(new Problem(complex,time,problema,typeProblem),typeProblem,incident);
                 //preguntar si desea agregar otra
                 do {
-                    System.out.print("¿Desea agregar otro problema? s/n");
+                    System.out.print("¿Desea agregar otro problema? s/n ");
                     other=scan.next();
                 }while(!other.equals("s") && !other.equals("n"));
             }while(!other.equals("n"));
-            System.out.println("Incidente agregado con éxito");
+            System.out.println("Incidente agregado con éxito ");
             System.out.println("La fecha de resolución estimada es "+ incident.getEstimatedDate());
         }
         catch(Exception e){
             e.printStackTrace();
-            System.out.println( "Cliente no encontrado");
+            System.out.println( "Cliente no encontrado ");
         }
 
 

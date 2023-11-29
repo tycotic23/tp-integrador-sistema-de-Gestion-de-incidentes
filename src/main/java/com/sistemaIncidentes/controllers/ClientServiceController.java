@@ -12,25 +12,6 @@ import java.util.List;
 
 public class ClientServiceController {
 
-    public void createClientService(){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(ClientService.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            ClientService clientService=new ClientService();
-            session.beginTransaction();
-            session.persist(clientService);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "successfully created");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error in creation of client service");
-        }
-
-
-    }
-
     public void createClientService(Client client, Service service){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(ClientService.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
@@ -43,10 +24,10 @@ public class ClientServiceController {
             session.persist(clientService);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully created");
+            System.out.println( "Correctamente creado el servicio para el cliente ");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error in creation of client service");
+            System.out.println( "Error en la creacion del servicio para el cliente");
         }
 
 
@@ -62,10 +43,10 @@ public class ClientServiceController {
             session.remove(clientService);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully removed");
+            System.out.println( "Correctamente removido el servicio al cliente");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error deleting client service");
+            System.out.println( "Error al remover el servicio al cliente");
         }
 
     }
@@ -76,42 +57,17 @@ public class ClientServiceController {
 
         try{
             session.beginTransaction();
-            //ClientService clientService = session.get(ClientService.class,id);
-            //clientService.setCUIT(CUIT);
-            //clientService.setEmail(email);
-            //clientService.setBusinessName(businessName);
             session.persist(clientService);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correctamente actualizado el servicio al cliente");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating client service");
+            System.out.println( "Error al intentar actualizar el servicio al cliente");
         }
 
     }
 
-    public void addClientToService(Client client,long idService){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(ClientService.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            ClientService clientService = session.get(ClientService.class,idService);
-            client.addService(clientService);
-            //clientService.setCUIT(CUIT);
-            //clientService.setEmail(email);
-            //clientService.setBusinessName(businessName);
-            session.persist(clientService);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "successfully updated");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error updating client service");
-        }
-
-    }
 
     public void addServiceToClient(Service service, long idService){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(ClientService.class).buildSessionFactory();
@@ -124,10 +80,10 @@ public class ClientServiceController {
             session.persist(clientService);
             session.getTransaction().commit();
             sessionFactory.close();
-            System.out.println( "successfully updated");
+            System.out.println( "Correctamente agregado el servicio al cliente");
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error updating client service");
+            System.out.println( "Error al intentar agregar el servicio al cliente");
         }
 
     }
@@ -145,7 +101,7 @@ public class ClientServiceController {
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println( "Error updating client service");
+        System.out.println( "Error al obtener el servicio del cliente en la base de datos");
         return null;
     }
 
@@ -158,19 +114,13 @@ public class ClientServiceController {
             CriteriaQuery<ClientService> cq=session.getCriteriaBuilder().createQuery(ClientService.class);
             cq.from(ClientService.class);
             List<ClientService> clientservices=session.createQuery(cq).getResultList();
-            /*for (ClientService cs:clientservices){
-                System.out.println("Client ID: "+cs.getId());
-                /*System.out.println("Email: "+c.getEmail());
-                System.out.println("Business Name: "+c.getBusinessName());
-                System.out.println("CUIT: "+c.getCUIT());
-            }*/
             sessionFactory.close();
             return clientservices;
         }catch (Exception e){
             e.printStackTrace();
-            System.out.println( "Error reading clients services");
+            System.out.println( "Error al obtener lista de servicios de clientes");
         }
-        System.out.println( "Finished client service list");
+        System.out.println( "Finalizada la lista de servicios a clientes");
         return null;
     }
 }
