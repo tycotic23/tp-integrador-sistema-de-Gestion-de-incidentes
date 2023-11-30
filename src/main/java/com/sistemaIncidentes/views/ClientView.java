@@ -53,56 +53,65 @@ public class ClientView {
 
 
 
-        //toca el menu: registrar incidente
-        //tiene una lista de los tecnicos segun el tipo de problema
-        //elige un tecnico
-        //poner los datos del incidente nuevo
-        //crear incidente con el controllador
-        //crear la relacion entre tecnico e incidente (controlador del incidente)
 
-        //menu: cerrar incidente
-        //mandar notificacion al tecnico
+
+        //menu
         Scanner scan = new Scanner (System.in);
         int option=0;
         Menu menu=new MenuComercial();
         //el menu cambia segun el tipo de usuario
+        String fin = "n";
         do {
-            System.out.println("¿Qué tipo de usuario es? ");
-            System.out.println("Elija una opcion: ");
-            System.out.println("1-RRHH ");
-            System.out.println("2-Comercial ");
-            System.out.println("3-Mesa de ayuda ");
-            option = scan.nextInt();
-            switch (option) {
-                case 1:
-                    menu=new MenuRRHH();
-                    break;
-                case 2:
-                    menu=new MenuComercial();
-                    break;
-                case 3:
-                    menu=new MenuOperator();
-                    break;
-            }
-        }while(option<1 || option>3);
-        String fin;
-        do{
-            //imprimir menu
-            System.out.println("Elija una opcion: ");
-            menu.printMenu();
             do {
+                System.out.println("¿Qué tipo de usuario es? ");
+                System.out.println("Elija una opcion: ");
+                System.out.println("1-RRHH ");
+                System.out.println("2-Comercial ");
+                System.out.println("3-Mesa de ayuda ");
                 option = scan.nextInt();
-            }while(!menu.isValidOption(option));
-            //ejecutar la opcion elegida
-            menu.selectOption(option);
+                switch (option) {
+                    case 1:
+                        menu = new MenuRRHH();
+                        break;
+                    case 2:
+                        menu = new MenuComercial();
+                        break;
+                    case 3:
+                        menu = new MenuOperator();
+                        break;
+                }
+            } while (option < 1 || option > 3);
 
-            //finalizar o continuar el bucle
             do {
-                System.out.print("¿Continuar? s/n ");
-                fin=scan.next();
-            }while(!fin.equals("s") && !fin.equals("n"));
-            System.out.println();
+                //imprimir menu
+                System.out.println("Elija una opcion: ");
+                menu.printMenu();
+                System.out.println("0- Salir");
+                do {
+                    option = scan.nextInt();
+                } while (!menu.isValidOption(option) && option != 0);
+                //si la opcion es 0 sale, sino es otra opcion del menu
+                if (option != 0) {
+                    //ejecutar la opcion elegida
+                    menu.selectOption(option);
 
+                    //finalizar o continuar el bucle
+                    do {
+                        System.out.print("¿Continuar? s/n ");
+                        fin = scan.next();
+                    } while (!fin.equals("s") && !fin.equals("n"));
+                    System.out.println();
+                } else {
+                    fin = "n";
+                }
+
+            } while (!fin.equals("n"));
+            //volver o no al menu principal
+            do {
+                System.out.print("¿Desea volver al menu principal? s/n ");
+                fin = scan.next();
+            } while (!fin.equals("s") && !fin.equals("n"));
+            System.out.println();
         }while(!fin.equals("n"));
     }
 
