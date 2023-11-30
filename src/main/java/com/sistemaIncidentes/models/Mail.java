@@ -6,6 +6,10 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class Mail {
+
+    public Mail(){
+
+    }
 /*
     public static void main(String[] args) {
 
