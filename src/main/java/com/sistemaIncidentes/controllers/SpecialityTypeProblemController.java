@@ -2,6 +2,7 @@ package com.sistemaIncidentes.controllers;
 
 import com.sistemaIncidentes.models.Speciality;
 import com.sistemaIncidentes.models.SpecialityTypeProblem;
+import com.sistemaIncidentes.models.TypeProblem;
 import jakarta.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,13 +11,15 @@ import org.hibernate.cfg.Configuration;
 import java.util.List;
 
 public class SpecialityTypeProblemController {
-    public void createSpecialityTypeProblem(){
+    public void createSpecialityTypeProblem(Speciality speciality, TypeProblem typeProblem){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTypeProblem.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
         try{
             SpecialityTypeProblem specialityTypeProblem=new SpecialityTypeProblem();
             session.beginTransaction();
+            speciality.addTypeProblem(specialityTypeProblem);
+            typeProblem.addSpeciality(specialityTypeProblem);
             session.persist(specialityTypeProblem);
             session.getTransaction().commit();
             sessionFactory.close();

@@ -7,26 +7,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProblemController {
-    public void createProblem(){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Problem.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
 
-        try{
-            Problem problem =new Problem();
-            session.beginTransaction();
-            session.persist(problem);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "Correctamente creado el problema");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error al crear el problema");
-        }
-
-
-    }
 
     public void createProblem(Problem problem,TypeProblem typeProblem, Incident incident){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Problem.class).buildSessionFactory();
@@ -57,6 +41,25 @@ public class ProblemController {
             session.beginTransaction();
             Problem problem = session.get(Problem.class,id);
             session.remove(problem);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "Correctamente eliminado el problema");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error en la elimizacion del problema");
+        }
+
+    }
+
+    public void deleteLogicalProblem(long id){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Problem.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            Problem problem = session.get(Problem.class,id);
+            problem.setActive(false);
+            session.persist(problem);
             session.getTransaction().commit();
             sessionFactory.close();
             System.out.println( "Correctamente eliminado el problema");
@@ -107,6 +110,25 @@ public class ProblemController {
     }
 
     public List<Problem> getAllProblem(){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Problem.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            CriteriaQuery<Problem> cq=session.getCriteriaBuilder().createQuery(Problem.class);
+            cq.from(Problem.class);
+            List<Problem> problems=session.createQuery(cq).getResultList();
+            sessionFactory.close();
+            return problems.stream().filter(Problem::isActive).collect(Collectors.toList());
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error al crear lista de problemas");
+        }
+        System.out.println( "Finalizada lista de problemas");
+        return null;
+    }
+
+    public List<Problem> getAllProblemAndRemoved(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Problem.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TechnicianController {
     public void createTechnician(Technician technician){
@@ -35,6 +36,25 @@ public class TechnicianController {
             session.beginTransaction();
             Technician technician = session.get(Technician.class,id);
             session.remove(technician);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "Correctamente eliminado el tecnico");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error en la eliminacion del tecnico");
+        }
+
+    }
+
+    public void deleteLogicalTechnician(long id){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            Technician technician = session.get(Technician.class,id);
+            technician.setActive(false);
+            session.persist(technician);
             session.getTransaction().commit();
             sessionFactory.close();
             System.out.println( "Correctamente eliminado el tecnico");
@@ -104,6 +124,25 @@ public class TechnicianController {
 
 
     public List<Technician> getAllTechnician(){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            CriteriaQuery<Technician> cq=session.getCriteriaBuilder().createQuery(Technician.class);
+            cq.from(Technician.class);
+            List<Technician> technicians =session.createQuery(cq).getResultList();
+            sessionFactory.close();
+            return technicians.stream().filter(Technician::isActive).collect(Collectors.toList());
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error al realizar la lista de tecnico desde la base de datos");
+        }
+        System.out.println( "Finalizada lista de tecnicos");
+        return null;
+    }
+
+    public List<Technician> getAllTechnicianAndRemoved(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 

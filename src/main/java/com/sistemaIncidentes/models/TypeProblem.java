@@ -86,9 +86,9 @@ public class TypeProblem {
         this.estimatedTime = estimatedTime;
     }
 
-    public void addTypeProblem(SpecialityTypeProblem typeProblem){
-        typeProblem.setTypeProblem(this);
-        this.specialities.add(typeProblem);
+    public void addSpeciality(SpecialityTypeProblem speciality){
+        speciality.setTypeProblem(this);
+        this.specialities.add(speciality);
     }
 
     public void addProblem(Problem problem){

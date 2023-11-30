@@ -1,9 +1,6 @@
 package com.sistemaIncidentes.views;
 
-import com.sistemaIncidentes.controllers.ClientController;
-import com.sistemaIncidentes.controllers.ClientServiceController;
-import com.sistemaIncidentes.controllers.IncidentController;
-import com.sistemaIncidentes.controllers.ServiceController;
+import com.sistemaIncidentes.controllers.*;
 import com.sistemaIncidentes.models.Client;
 import com.sistemaIncidentes.models.Service;
 
@@ -12,12 +9,13 @@ import java.util.Scanner;
 
 public class MenuComercial implements Menu{
 
-    private ClientController clientController=new ClientController();
-    private ServiceController serviceController=new ServiceController();
-    private ClientServiceController clientServiceController= new ClientServiceController();
+    private final ClientController clientController=new ClientController();
+    private final ServiceController serviceController=new ServiceController();
+    private final ClientServiceController clientServiceController= new ClientServiceController();
+    private final ProblemController problemController=new ProblemController();
 
-    private IncidentController incidentController=new IncidentController();
-    private Scanner scan = new Scanner (System.in);
+    private final IncidentController incidentController=new IncidentController();
+    private final Scanner scan = new Scanner (System.in);
     @Override
     public void printMenu() {
         System.out.println("1-Ver todos los clientes ");
@@ -35,37 +33,29 @@ public class MenuComercial implements Menu{
 
     @Override
     public void selectOption(int option) {
-        switch (option){
+        switch (option) {
             //ver todos los clientes
-            case 1:
-                listClient();
-                break;
+            case 1 -> listClient();
+
             //Ver un cliente
-            case 2:
-                getClient();
-                break;
+            case 2 -> getClient();
+
             //Borrar un cliente
-            case 3:
-                removeClient();
-                break;
+            case 3 -> removeClient();
+
             //Actualizar un cliente
-            case 4:
-                updateClient();
-                break;
+            case 4 -> updateClient();
+
             //Alta de cliente
-            case 5:
-                addClient();
-                break;
+            case 5 -> addClient();
+
             //Darle un servicio a un cliente
-            case 6:
-                addServiceToClient();
-                break;
+            case 6 -> addServiceToClient();
         }
 
     }
 
     private void addClient(){
-        String change;
         //pedir nuevos datos
         //razon social
         System.out.print("Razon social: ");
@@ -85,19 +75,19 @@ public class MenuComercial implements Menu{
     }
 
     private void addServiceToClient(){
-        int clientId=0;
-        int serviceId=0;
+        int clientId;
+        int serviceId;
         System.out.println("Ingrese el id del cliente a añadir un servicio");
         //mostrar cliente original
         clientId=scan.nextInt();
-        Client client=clientController.getClient((long)clientId);
+        Client client=clientController.getClient(clientId);
         System.out.println(client);
         //mostrar una lista de todos los servicios
         listServices();
         //pedir id del servicio
         System.out.println("Ingrese el id del servicio elegido");
         serviceId=scan.nextInt();
-        Service service=serviceController.getService((long)serviceId);
+        Service service=serviceController.getService(serviceId);
         //crear relacion
         clientServiceController.createClientService(client,service);
         System.out.println("Añadido con éxito el servicio");
@@ -106,23 +96,29 @@ public class MenuComercial implements Menu{
 
 
     private void removeClient(){
-        int clientId=0;
+        int clientId;
         System.out.println("Ingrese el id del cliente a borrar");
         clientId=scan.nextInt();
         //borrado logico del cliente
-        clientController.deleteLogicalClient((long)clientId);
-        //borrado logico de todos sus incidentes
-        Client client =clientController.getClient((long)clientId);
-        client.getIncidents().forEach(i->incidentController.deleteLogicalIncident(i.getId()));
+        clientController.deleteLogicalClient(clientId);
+        //borrado logico de todos sus incidentes y sus respectivos problemas tambien
+        Client client =clientController.getClient(clientId);
+        client.getIncidents().forEach(
+                i-> {
+                    incidentController.deleteLogicalIncident(i.getId());
+                    i.getProblems().forEach(
+                            p->problemController.deleteLogicalProblem(p.getId())
+                    );
+                });
     }
 
     private void updateClient(){
-        int clientId=0;
+        int clientId;
         String change;
         System.out.println("Ingrese el id del cliente a modificar");
         //mostrar cliente original
         clientId=scan.nextInt();
-        Client client=clientController.getClient((long)clientId);
+        Client client=clientController.getClient(clientId);
         System.out.println(client);
         //pedir nuevos datos
         //razon social
@@ -166,12 +162,12 @@ public class MenuComercial implements Menu{
         System.out.println();
 
         //persistir
-        clientController.updateClient((long)clientId,client);
+        clientController.updateClient(clientId,client);
     }
 
     private void listClient(){
         List<Client> clients=clientController.getAllClient();
-        if(clients.size()==0){
+        if(clients.isEmpty()){
             System.out.println("No hay ningún cliente");
         }
         for (Client c: clients){
@@ -181,7 +177,7 @@ public class MenuComercial implements Menu{
 
     private void listServices(){
         List<Service> services=serviceController.getAllService();
-        if(services.size()==0){
+        if(services.isEmpty()){
             System.out.println("No hay ningún servicio");
         }
         for (Service s: services){
@@ -190,9 +186,9 @@ public class MenuComercial implements Menu{
     }
 
     private void getClient(){
-        int clientId=0;
+        int clientId;
         System.out.println("Ingrese el id del cliente ");
         clientId=scan.nextInt();
-        System.out.println(clientController.getClient((long)clientId));
+        System.out.println(clientController.getClient(clientId));
     }
 }

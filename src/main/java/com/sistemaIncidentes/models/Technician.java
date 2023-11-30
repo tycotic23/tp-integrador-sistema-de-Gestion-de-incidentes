@@ -159,13 +159,19 @@ public class Technician {
                 '}';
     }
 
-    public String toStringTechIncidents(){
-        return "Technician{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", available='" + available + '\'' +
-                ", incidents=" + incidents +
-                '}';
+    public void report(){
+        System.out.println("id=" + id +
+                ", nombre='" + name + '\'' +
+                ", disponible='" + available + '\'');
+        System.out.println("Incidentes: ");
+        incidents.forEach(i->{
+            System.out.println("id="+i.getId());
+            System.out.println("inicio="+i.getDate());
+            System.out.println("fin="+i.getEstimatedDate());
+            System.out.println("estado="+i.isSolved());
+
+
+        });
     }
 
 

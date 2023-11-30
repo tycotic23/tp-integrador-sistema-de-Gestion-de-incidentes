@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 public class IncidentController {
 
     public Incident createIncident(Client client, Service service, Technician technician){
@@ -68,24 +70,6 @@ public class IncidentController {
 
     }
 
-    public void deleteLogicalIncident(Incident incident){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            incident.setActive(false);
-            session.persist(incident);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "Correctamente eliminado el incidente");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error al eliminar el incidente");
-        }
-
-    }
-
     public void closeIncident(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
@@ -101,26 +85,6 @@ public class IncidentController {
         }catch (Exception e){
             e.printStackTrace();
             System.out.println( "Error al finalizar el incidente");
-        }
-
-    }
-
-    public void updateIncident(long id){
-        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
-        Session session=sessionFactory.openSession();
-
-        try{
-            session.beginTransaction();
-            Incident incident = session.get(Incident.class,id);
-
-
-            session.persist(incident);
-            session.getTransaction().commit();
-            sessionFactory.close();
-            System.out.println( "Correcamente actualizado el incidente");
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println( "Error al intentar actualizar el incidente");
         }
 
     }
@@ -145,6 +109,25 @@ public class IncidentController {
     }
 
     public List<Incident> getAllIncident(){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            CriteriaQuery <Incident> cq=session.getCriteriaBuilder().createQuery(Incident.class);
+            cq.from(Incident.class);
+            List<Incident> incidents=session.createQuery(cq).getResultList();
+            sessionFactory.close();
+            return incidents.stream().filter(Incident::isActive).collect(Collectors.toList());
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error al leer los incidentes desde la base de datos");
+        }
+        System.out.println( "Finalizada lista de incidentes");
+        return null;
+    }
+
+    public List<Incident> getAllIncidentAndRemoved(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 

@@ -106,7 +106,7 @@ public class Client {
                 ", businessName='" + businessName + '\'' +
                 ", CUIT='" + CUIT + '\'' +
                 ", email='" + email + '\'' +
-                ", hiredServices=" + hiredServices +
+                ", hiredServices=" + hiredServices.stream().map(ClientService::getService).collect(Collectors.toList()) +
                 ", incidents=" + incidents +
                 '}';
     }

@@ -1,8 +1,6 @@
 package com.sistemaIncidentes.views;
 
-import com.sistemaIncidentes.controllers.SpecialityController;
-import com.sistemaIncidentes.controllers.TechnicianController;
-import com.sistemaIncidentes.controllers.SpecialityTechnicianController;
+import com.sistemaIncidentes.controllers.*;
 import com.sistemaIncidentes.models.Technician;
 import com.sistemaIncidentes.models.Speciality;
 
@@ -12,10 +10,14 @@ import java.util.Scanner;
 
 public class MenuRRHH implements Menu{
 
-    private Scanner scan = new Scanner (System.in);
-    private TechnicianController controllerTechnician=new TechnicianController();
-    private SpecialityController controllerSpeciality=new SpecialityController();
-    private SpecialityTechnicianController specialityTechnicianController=new SpecialityTechnicianController();
+    private final Scanner scan = new Scanner (System.in);
+    private final TechnicianController technicianController=new TechnicianController();
+    private final SpecialityController controllerSpeciality=new SpecialityController();
+    private final SpecialityTechnicianController specialityTechnicianController=new SpecialityTechnicianController();
+
+    private final ProblemController problemController=new ProblemController();
+
+    private final IncidentController incidentController=new IncidentController();
 
     @Override
     public void printMenu() {
@@ -33,47 +35,36 @@ public class MenuRRHH implements Menu{
 
     @Override
     public void selectOption(int option) {
-        switch (option){
+        switch (option) {
             //ver todos los tecnicos
-            case 1:
-                listTechnician();
-                break;
+            case 1 -> listTechnician();
+
             //Ver un tecnico
-            case 2:
-                getTechnician();
-                break;
+            case 2 -> getTechnician();
+
             //Borrar un tecnico
-            case 3:
-                removeTechnician();
-                break;
+            case 3 -> removeTechnician();
+
             //Actualizar un tecnico
-            case 4:
-                updateTechnician();
-                break;
+            case 4 -> updateTechnician();
+
             //alta de tecnico
-            case 5:
-                addTechnician();
-                break;
+            case 5 -> addTechnician();
+
             //darle un servicio a un cliente
-            case 6:
-                addSpecialityToTechnician();
-                break;
+            case 6 -> addSpecialityToTechnician();
+
             //Crear informe de incidentes
-            case 7:
-                listTechnicianWithIncidents();
-                break;
+            case 7 -> listTechnicianWithIncidents();
+
             //encontrar tecnico con mas incidentes resueltos
-            case 8:
-                technicianWithMostIncidentsSolvedInNDays();
-                break;
+            case 8 -> technicianWithMostIncidentsSolvedInNDays();
+
             //Consultar técnico con más incidentes resueltos de cierta especialidad en los últimos n días
-            case 9:
-                technicianWithMostIncidentsSolvedInNDaysSpeciality();
-                break;
+            case 9 -> technicianWithMostIncidentsSolvedInNDaysSpeciality();
+
             //Consultar técnico más rápido
-            case 10:
-                getFasterTechnician();
-                break;
+            case 10 -> getFasterTechnician();
         }
 
     }
@@ -85,7 +76,7 @@ public class MenuRRHH implements Menu{
 
 
     private void getFasterTechnician(){
-        Technician fasterTechinician=controllerTechnician.getAllTechnician().stream().min(Comparator.comparing(Technician::getAverage)).get();
+        Technician fasterTechinician=technicianController.getAllTechnician().stream().min(Comparator.comparing(Technician::getAverage)).get();
         if(fasterTechinician!=null){
             System.out.println("El técnico con mejor promedio de tiempo al resolver incidentes es "+fasterTechinician);
         }
@@ -96,7 +87,6 @@ public class MenuRRHH implements Menu{
 
 
     private void addTechnician(){
-        String change;
         //pedir nuevos datos
         //nombre
         System.out.print("Nombre: ");
@@ -109,7 +99,7 @@ public class MenuRRHH implements Menu{
 
         //persistir
         Technician technician = new Technician(name,email);
-        controllerTechnician.createTechnician(technician);
+        technicianController.createTechnician(technician);
         int speciality;
         String other;
         do{
@@ -118,7 +108,7 @@ public class MenuRRHH implements Menu{
             speciality=scan.nextInt();
             System.out.println();
             //persistir la especialidad y crear la relacion
-            specialityTechnicianController.createSpecialityTechnician(controllerSpeciality.getSpeciality((long)speciality),technician);
+            specialityTechnicianController.createSpecialityTechnician(controllerSpeciality.getSpeciality(speciality),technician);
             //preguntar si desea agregar otra
             do {
                 System.out.print("¿Desea agregar otra? s/n ");
@@ -128,19 +118,19 @@ public class MenuRRHH implements Menu{
     }
 
     private void addSpecialityToTechnician(){
-        int technicianId=0;
-        int specialityId=0;
+        int technicianId;
+        int specialityId;
         System.out.println("Ingrese el id del tecnico a añadir un servicio ");
         //mostrar tecnico original
         technicianId=scan.nextInt();
-        Technician technician=controllerTechnician.getTechnician((long)technicianId);
+        Technician technician=technicianController.getTechnician(technicianId);
         System.out.println(technician);
         //mostrar una lista de todos los servicios
         listSpecialities();
         //pedir id del servicio
         System.out.println("Ingrese el id del servicio elegido ");
         specialityId=scan.nextInt();
-        Speciality speciality=controllerSpeciality.getSpeciality((long)specialityId);
+        Speciality speciality=controllerSpeciality.getSpeciality(specialityId);
         //crear relacion
         specialityTechnicianController.createSpecialityTechnician(speciality,technician);
         System.out.println("Añadido con éxito ");
@@ -149,19 +139,29 @@ public class MenuRRHH implements Menu{
 
 
     private void removeTechnician(){
-        int technicianId=0;
+        int technicianId;
         System.out.println("Ingrese el id del tecnico a borrar ");
         technicianId=scan.nextInt();
-        controllerTechnician.deleteTechnician((long)technicianId);
+        //borrado logico del tecnico
+        technicianController.deleteLogicalTechnician(technicianId);
+        //borrado logico de todos sus incidentes y sus respectivos problemas tambien
+        Technician technician =technicianController.getTechnician(technicianId);
+        technician.getIncidents().forEach(
+                i-> {
+                    incidentController.deleteLogicalIncident(i.getId());
+                    i.getProblems().forEach(
+                            p->problemController.deleteLogicalProblem(p.getId())
+                    );
+                });
     }
 
     private void updateTechnician(){
-        int technicianId=0;
+        int technicianId;
         String change;
         System.out.println("Ingrese el id del tecnico a modificar ");
         //mostrar tecnico original
         technicianId=scan.nextInt();
-        Technician technician=controllerTechnician.getTechnician((long)technicianId);
+        Technician technician=technicianController.getTechnician(technicianId);
         System.out.println(technician);
         //pedir nuevos datos
         //razon social
@@ -192,15 +192,15 @@ public class MenuRRHH implements Menu{
         System.out.println();
 
         //persistir
-        controllerTechnician.updateTechnician((long)technicianId,technician);
+        technicianController.updateTechnician(technicianId,technician);
     }
 
     private void listTechnician(){
-        List<Technician> technicians=controllerTechnician.getAllTechnician();
+        List<Technician> technicians=technicianController.getAllTechnician();
         for (Technician t: technicians){
             System.out.println(t);
         }
-        if(technicians.size()==0){
+        if(technicians.isEmpty()){
             System.out.println("No hay técnicos para técnicos");
         }
     }
@@ -210,7 +210,7 @@ public class MenuRRHH implements Menu{
         System.out.print("Ingrese la cantidad de días: ");
         n=scan.nextInt();
         System.out.println();
-        List<Technician> technicians=controllerTechnician.getAllTechnician();
+        List<Technician> technicians=technicianController.getAllTechnician();
         Technician technician= technicians.stream().max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).orElse(null);
         if(technician!=null){
             System.out.println("El técnico con más incidentes resueltos en los últimos "+n+" días es " + technician);
@@ -227,8 +227,8 @@ public class MenuRRHH implements Menu{
         listSpecialities();
         specialityID=scan.nextInt();
         System.out.println();
-        Speciality speciality = controllerSpeciality.getSpeciality((long)specialityID);
-        List<Technician> technicians=controllerTechnician.getAllTechnician();
+        Speciality speciality = controllerSpeciality.getSpeciality(specialityID);
+        List<Technician> technicians=technicianController.getAllTechnician();
         Technician technician=technicians.stream()
                 .filter(t -> t.hasSpeciality(speciality.getName()))
                 .max(Comparator.comparing(t -> t.getIncidentsSolvedNumberFromLastNDays(n))).get();
@@ -243,8 +243,9 @@ public class MenuRRHH implements Menu{
     }
 
     private void listTechnicianWithIncidents(){
-        for (Technician t: controllerTechnician.getAllTechnician()){
-            System.out.println(t.toStringTechIncidents());
+        for (Technician t: technicianController.getAllTechnician()){
+            t.report();
+            System.out.println("-----------------------------");
         }
     }
 
@@ -253,16 +254,16 @@ public class MenuRRHH implements Menu{
         for (Speciality s: specialities){
             System.out.println(s);
         }
-        if(specialities.size()==0){
+        if(specialities.isEmpty()){
             System.out.println("No hay ninguna especialidad para mostrar");
         }
     }
 
     private void getTechnician(){
-        int technicianId=0;
+        int technicianId;
         System.out.println("Ingrese el id del tecnico ");
         technicianId=scan.nextInt();
-        System.out.println(controllerTechnician.getTechnician((long)technicianId));
+        System.out.println(technicianController.getTechnician(technicianId));
     }
 
 

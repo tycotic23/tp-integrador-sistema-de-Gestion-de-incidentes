@@ -2,29 +2,21 @@ package com.sistemaIncidentes.views;
 
 import com.sistemaIncidentes.controllers.*;
 import com.sistemaIncidentes.models.*;
-
-import java.time.LocalDate;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
 
 public class MenuOperator implements Menu {
-    private ClientController clientController = new ClientController();
+    private final ClientController clientController = new ClientController();
 
-    private ServiceController serviceController=new ServiceController();
-    private ClientServiceController clientServiceController= new ClientServiceController();
-    private IncidentController incidentController = new IncidentController();
-    private ProblemController problemController = new ProblemController();
-    private SpecialityController specialityController = new SpecialityController();
-    private TechnicianController TechnicianControler = new TechnicianController();
-    private TypeProblemController typeProblemController = new TypeProblemController();
-    private SpecialityTypeProblem specialityType = new SpecialityTypeProblem();
-    private TechnicianController technicianController = new TechnicianController();
-    private SpecialityTechnicianController specialityTechnicianController = new SpecialityTechnicianController();
+    private final ServiceController serviceController=new ServiceController();
+    private final IncidentController incidentController = new IncidentController();
+    private final ProblemController problemController = new ProblemController();
+    private final TypeProblemController typeProblemController = new TypeProblemController();
+    private final TechnicianController technicianController = new TechnicianController();
 
-    private Scanner scan = new Scanner (System.in);
+    private final Scanner scan = new Scanner (System.in);
     @Override
     public void printMenu() {
         System.out.println("1-Ver todos los clientes ");
@@ -42,33 +34,24 @@ public class MenuOperator implements Menu {
 
     @Override
     public void selectOption(int option) {
-        Scanner scan = new Scanner (System.in);
-        int clientId=0;
-        switch (option){
+        switch (option) {
             //ver todos los clientes
-            case 1:
-                listClient();
-                break;
+            case 1 -> listClient();
+
             //Ver todos los tecnicos
-            case 2:
-                listTechnician();
-                break;
+            case 2 -> listTechnician();
+
             //ver tecnicos disponibles para un problema
-            case 3:
-                listTechnicianForTypeProblems();
-                break;
+            case 3 -> listTechnicianForTypeProblems();
+
             //Ver datos de un cliente
-            case 4:
-                getClient();
-                break;
+            case 4 -> getClient();
+
             //registrar un incidente
-            case 5:
-                registerIncident();
-                break;
+            case 5 -> registerIncident();
+
             //dar por finalizado un incidente
-            case 6:
-                closeIncident();
-                break;
+            case 6 -> closeIncident();
         }
 
     }
@@ -90,37 +73,34 @@ public class MenuOperator implements Menu {
 
     private void closeIncident(){
         int technicianId;
-        int incidentId;
-        String change;
         //pedir ide del tecnico
         System.out.println("Ingrese el id del técnico ");
         technicianId=scan.nextInt();
         //modificar y persistir
-        Technician technician=technicianController.getTechnician((long)technicianId);
-        technicianController.setAvailableForId((long)technicianId,true);
-        incidentController.closeIncident((long)technician.getActiveIncident().getId());
+        Technician technician=technicianController.getTechnician(technicianId);
+        technicianController.setAvailableForId(technicianId,true);
+        incidentController.closeIncident(technician.getActiveIncident().getId());
         System.out.println("cerrado con existo ");
     }
 
 
     private void getClient(){
-        int clientId=0;
+        int clientId;
         System.out.println("Ingrese el id del cliente ");
         clientId=scan.nextInt();
-        System.out.println(clientController.getClient((long)clientId));
+        System.out.println(clientController.getClient(clientId));
     }
     private void listTechnicianForTypeProblems(){
-        int technicianId=0;
-        int problemId=0;
+        int problemId;
 
         System.out.println("Ingrese el del tipo de problema ");
         listTypeProblems();
         problemId=scan.nextInt();
-        List<Technician> technicians=getTechnicianForTypeProblems((long)problemId);
+        List<Technician> technicians=getTechnicianForTypeProblems(problemId);
         for (Technician t: technicians){
             System.out.println(t);
         }
-        if(technicians.size()==0){
+        if(technicians.isEmpty()){
             System.out.println("No hay técnicos disponibles");
         }
     }
@@ -131,22 +111,14 @@ public class MenuOperator implements Menu {
                 .filter(t->t.canResolveTypeProblem(typeProblem)).filter(Technician::isAvailable).collect(Collectors.toList());
     }
 
-    private void listProblems(){
-        List<Problem> problems=problemController.getAllProblem();
-        for (Problem p: problems){
-            System.out.println(p);
-        }
-        if(problems.size()==0){
-            System.out.println("No hay ningún problema");
-        }
-    }
+
 
     private void listTypeProblems(){
         List<TypeProblem> typesproblem=typeProblemController.getAllTypeProblem();
         for (TypeProblem p: typesproblem){
             System.out.println(p);
         }
-        if(typesproblem.size()==0){
+        if(typesproblem.isEmpty()){
             System.out.println("No hay ningún tipo de problema");
         }
     }
@@ -178,26 +150,26 @@ public class MenuOperator implements Menu {
             //pedir el servicio en cuestion
             int serviceId= scan.nextInt();
             System.out.println();
-            Service service=serviceController.getService((long)serviceId);
+            Service service=serviceController.getService(serviceId);
             //pedir datos del incidente: tipo de problema
             System.out.println("¿De qué tipo de problema se trata? Elija su id: ");
             listTypeProblems();
             int typeProblemId= scan.nextInt();
             System.out.println();
-            TypeProblem typeProblem=typeProblemController.getTypeProblem((long)typeProblemId);
+            TypeProblem typeProblem=typeProblemController.getTypeProblem(typeProblemId);
             //listar los tecnicos en base al tipo de problema
             System.out.println("Elija un técnico disponible de la siguiente lista: ");
-            for(Technician t: getTechnicianForTypeProblems((long)typeProblemId)){
+            for(Technician t: getTechnicianForTypeProblems(typeProblemId)){
                 System.out.println(t);
             }
             //elegir un tecnico
             int technicianId= scan.nextInt();
             System.out.println();
-            Technician technician=technicianController.getTechnician((long)technicianId);
+            Technician technician=technicianController.getTechnician(technicianId);
             //crear incidente
             Incident incident= incidentController.createIncident(client,service,technician);
             //actualizar estado de disponibilidad del tecnico
-            technicianController.setAvailableForId((long)technicianId,false);
+            technicianController.setAvailableForId(technicianId,false);
             //pedir problemas
             String problema;
             double time;

@@ -49,6 +49,8 @@ public class SpecialityTechnicianController {
 
     }
 
+
+
     public void updateSpecialityTechnician(long id,SpecialityTechnician specialityTechnician){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(SpecialityTechnician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
