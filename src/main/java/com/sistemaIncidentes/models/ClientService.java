@@ -19,6 +19,7 @@ public class ClientService {
     @JoinColumn(name="service_id")
     private Service service;
 
+
     public ClientService() {
     }
 

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ClientController {
 
@@ -47,14 +48,37 @@ public class ClientController {
 
     }
 
-
-    public void updateClient(Client clientUpdated){
+    public void deleteLogicalClient(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
         try{
             session.beginTransaction();
-            session.persist(clientUpdated);
+            Client client = session.get(Client.class,id);
+            client.setActive(false);
+            session.persist(client);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "correctamente borrado el cliente");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error al intentar borrar el cliente");
+        }
+
+    }
+
+
+    public void updateClient(long id,Client clientUpdated){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            Client client = session.get(Client.class,id);
+            client.setCUIT(clientUpdated.getCUIT());
+            client.setBusinessName(clientUpdated.getBusinessName());
+            client.setEmail(clientUpdated.getEmail());
+            session.persist(client);
             session.getTransaction().commit();
             sessionFactory.close();
             System.out.println( "correctamente actualizado el cliente");
@@ -84,6 +108,25 @@ public class ClientController {
     }
 
     public List<Client> getAllClient(){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            CriteriaQuery <Client> cq=session.getCriteriaBuilder().createQuery(Client.class);
+            cq.from(Client.class);
+            List<Client> clients=session.createQuery(cq).getResultList();
+            sessionFactory.close();
+            return clients.stream().filter(Client::isActive).collect(Collectors.toList());
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error al crear lista de clientes");
+        }
+        System.out.println( "Finalizada lista de clientes");
+        return null;
+    }
+
+    public List<Client> getAllClientandInactive(){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 

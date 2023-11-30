@@ -24,6 +24,7 @@ public class Client {
     @OneToMany(mappedBy="client",fetch = FetchType.EAGER)
     private Set<Incident> incidents=new HashSet<>();
 
+    private boolean active=true;
     public Client() {
     }
 
@@ -35,6 +36,14 @@ public class Client {
 
     public long getId() {
         return id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getBusinessName() {

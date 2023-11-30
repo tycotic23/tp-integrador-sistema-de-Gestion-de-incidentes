@@ -25,6 +25,8 @@ public class Technician {
     @OneToMany(mappedBy="technician",fetch = FetchType.EAGER)
     private Set<SpecialityTechnician> specialities=new HashSet<>();
 
+    private boolean active=true;
+
     public Technician() {
     }
 
@@ -37,6 +39,13 @@ public class Technician {
         return id;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     public String getName() {
         return name;
     }

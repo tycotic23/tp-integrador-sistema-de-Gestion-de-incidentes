@@ -49,6 +49,43 @@ public class IncidentController {
 
     }
 
+    public void deleteLogicalIncident(long id){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            Incident incident = session.get(Incident.class,id);
+            incident.setActive(false);
+            session.persist(incident);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "Correctamente eliminado el incidente");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error al eliminar el cliente");
+        }
+
+    }
+
+    public void deleteLogicalIncident(Incident incident){
+        SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
+        Session session=sessionFactory.openSession();
+
+        try{
+            session.beginTransaction();
+            incident.setActive(false);
+            session.persist(incident);
+            session.getTransaction().commit();
+            sessionFactory.close();
+            System.out.println( "Correctamente eliminado el incidente");
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println( "Error al eliminar el incidente");
+        }
+
+    }
+
     public void closeIncident(long id){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
         Session session=sessionFactory.openSession();

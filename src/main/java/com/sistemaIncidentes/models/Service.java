@@ -19,13 +19,24 @@ public class Service {
    @OneToMany(mappedBy="service",fetch = FetchType.EAGER)
     private Set<Incident> incidents=new HashSet<>();
 
+
+    private boolean active=true;
     public Service() {
     }
+
 
     public Service(String name) {
         this.name = name;
     }
 
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     public long getId() {
         return id;
     }

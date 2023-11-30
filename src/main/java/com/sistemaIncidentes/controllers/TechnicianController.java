@@ -45,14 +45,15 @@ public class TechnicianController {
 
     }
 
-    public void updateTechnician(long id){
+    public void updateTechnician(long id,Technician technicianUpdated){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
         try{
             session.beginTransaction();
             Technician technician = session.get(Technician.class,id);
-
+            technician.setName(technicianUpdated.getName());
+            technician.setEmail(technicianUpdated.getEmail());
 
 
             session.persist(technician);

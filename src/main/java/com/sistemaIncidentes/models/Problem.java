@@ -22,6 +22,8 @@ public class Problem {
     @JoinColumn(name="typeProblem_id")
     private TypeProblem typeProblem;
 
+    private boolean active=true;
+
     public Problem() {
     }
 
@@ -36,6 +38,13 @@ public class Problem {
         return id;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     public boolean isComplex() {
         return isComplex;
     }

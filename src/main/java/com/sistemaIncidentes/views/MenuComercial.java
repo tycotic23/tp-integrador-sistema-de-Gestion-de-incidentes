@@ -2,10 +2,12 @@ package com.sistemaIncidentes.views;
 
 import com.sistemaIncidentes.controllers.ClientController;
 import com.sistemaIncidentes.controllers.ClientServiceController;
+import com.sistemaIncidentes.controllers.IncidentController;
 import com.sistemaIncidentes.controllers.ServiceController;
 import com.sistemaIncidentes.models.Client;
 import com.sistemaIncidentes.models.Service;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuComercial implements Menu{
@@ -13,6 +15,8 @@ public class MenuComercial implements Menu{
     private ClientController clientController=new ClientController();
     private ServiceController serviceController=new ServiceController();
     private ClientServiceController clientServiceController= new ClientServiceController();
+
+    private IncidentController incidentController=new IncidentController();
     private Scanner scan = new Scanner (System.in);
     @Override
     public void printMenu() {
@@ -105,7 +109,11 @@ public class MenuComercial implements Menu{
         int clientId=0;
         System.out.println("Ingrese el id del cliente a borrar");
         clientId=scan.nextInt();
-        clientController.deleteClient((long)clientId);
+        //borrado logico del cliente
+        clientController.deleteLogicalClient((long)clientId);
+        //borrado logico de todos sus incidentes
+        Client client =clientController.getClient((long)clientId);
+        client.getIncidents().forEach(i->incidentController.deleteLogicalIncident(i.getId()));
     }
 
     private void updateClient(){
@@ -118,29 +126,32 @@ public class MenuComercial implements Menu{
         System.out.println(client);
         //pedir nuevos datos
         //razon social
+        scan.nextLine();
         do {
             System.out.print("¿Cambiar razón social? s/n ");
-            change=scan.next();
+            change=scan.nextLine();
         }while(!change.equals("s") && !change.equals("n"));
         System.out.println();
         if(change.equals("s")){
             System.out.print("Nueva razon social: ");
             change=scan.nextLine();
+            client.setBusinessName(change);
         }
         System.out.println();
-        client.setBusinessName(change);
+
         //CUIT
         do {
             System.out.print("¿Cambiar CUIT? s/n ");
-            change=scan.next();
+            change=scan.nextLine();
         }while(!change.equals("s") && !change.equals("n"));
         System.out.println();
         if(change.equals("s")){
             System.out.print("Nuevo CUIT: ");
             change=scan.next();
+            client.setCUIT(change);
         }
         System.out.println();
-        client.setCUIT(change);
+
         //email
         do {
             System.out.print("¿Cambiar email? s/n ");
@@ -150,21 +161,30 @@ public class MenuComercial implements Menu{
         if(change.equals("s")){
             System.out.print("Nuevo email: ");
             change=scan.next();
+            client.setEmail(change);
         }
         System.out.println();
-        client.setEmail(change);
+
         //persistir
-        clientController.updateClient(client);
+        clientController.updateClient((long)clientId,client);
     }
 
     private void listClient(){
-        for (Client c: clientController.getAllClient()){
+        List<Client> clients=clientController.getAllClient();
+        if(clients.size()==0){
+            System.out.println("No hay ningún cliente");
+        }
+        for (Client c: clients){
             System.out.println(c);
         }
     }
 
     private void listServices(){
-        for (Service s: serviceController.getAllService()){
+        List<Service> services=serviceController.getAllService();
+        if(services.size()==0){
+            System.out.println("No hay ningún servicio");
+        }
+        for (Service s: services){
             System.out.println(s);
         }
     }

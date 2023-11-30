@@ -120,6 +120,9 @@ public class MenuOperator implements Menu {
         for (Technician t: technicians){
             System.out.println(t);
         }
+        if(technicians.size()==0){
+            System.out.println("No hay técnicos disponibles");
+        }
     }
 
     private List<Technician> getTechnicianForTypeProblems(long problemId){
@@ -129,24 +132,29 @@ public class MenuOperator implements Menu {
     }
 
     private void listProblems(){
-        for (Problem p: problemController.getAllProblem()){
+        List<Problem> problems=problemController.getAllProblem();
+        for (Problem p: problems){
             System.out.println(p);
+        }
+        if(problems.size()==0){
+            System.out.println("No hay ningún problema");
         }
     }
 
     private void listTypeProblems(){
-        for (TypeProblem p: typeProblemController.getAllTypeProblem()){
+        List<TypeProblem> typesproblem=typeProblemController.getAllTypeProblem();
+        for (TypeProblem p: typesproblem){
             System.out.println(p);
         }
-    }
-    private void listSpecialities(){
-        for (Speciality s: specialityController.getAllSpeciality()){
-            System.out.println(s);
+        if(typesproblem.size()==0){
+            System.out.println("No hay ningún tipo de problema");
         }
     }
 
+
     private void listServices(){
-        for (Service s: serviceController.getAllService()){
+        List<Service> services=serviceController.getAllService();
+        for (Service s: services){
             System.out.println(s);
         }
     }
@@ -166,9 +174,7 @@ public class MenuOperator implements Menu {
                     .findFirst().orElse(null);
             System.out.println("Elija el id del servicio en cuestión: ");
             //listar los servicios
-            for (Service s: client.getServicesList()){
-                System.out.println(s);
-            }
+            listServices();
             //pedir el servicio en cuestion
             int serviceId= scan.nextInt();
             System.out.println();

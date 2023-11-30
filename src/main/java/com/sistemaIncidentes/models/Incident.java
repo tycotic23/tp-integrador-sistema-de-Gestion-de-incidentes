@@ -42,6 +42,8 @@ public class Incident {
     @JoinColumn(name="technician_id")
     private Technician technician;
 
+    private boolean active=true;
+
     public Incident() {
         date=LocalDate.now();
     }
@@ -52,6 +54,14 @@ public class Incident {
         return id;
     }
 
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
    public Service getService() {
         return service;
     }

@@ -166,28 +166,18 @@ public class MenuRRHH implements Menu{
         //pedir nuevos datos
         //razon social
         do {
-            System.out.print("¿Cambiar razón social? s/n ");
+            System.out.print("¿Cambiar nombre? s/n ");
             change=scan.next();
         }while(!change.equals("s") && !change.equals("n"));
         System.out.println();
         if(change.equals("s")){
-            System.out.print("Nueva razon social: ");
+            System.out.print("Nuevo nombre: ");
             change=scan.nextLine();
+            technician.setName(change);
         }
         System.out.println();
-        //technician.setBusinessName(change);
-        //CUIT
-        do {
-            System.out.print("¿Cambiar CUIT? s/n ");
-            change=scan.next();
-        }while(!change.equals("s") && !change.equals("n"));
-        System.out.println();
-        if(change.equals("s")){
-            System.out.print("Nuevo CUIT: ");
-            change=scan.next();
-        }
-        System.out.println();
-        //technician.setCUIT(change);
+
+
         //email
         do {
             System.out.print("¿Cambiar email? s/n ");
@@ -197,16 +187,21 @@ public class MenuRRHH implements Menu{
         if(change.equals("s")){
             System.out.print("Nuevo email: ");
             change=scan.next();
+            technician.setEmail(change);
         }
         System.out.println();
-        technician.setEmail(change);
+
         //persistir
-        //controllerTechnician.updateTechnician(technician);
+        controllerTechnician.updateTechnician((long)technicianId,technician);
     }
 
     private void listTechnician(){
-        for (Technician t: controllerTechnician.getAllTechnician()){
+        List<Technician> technicians=controllerTechnician.getAllTechnician();
+        for (Technician t: technicians){
             System.out.println(t);
+        }
+        if(technicians.size()==0){
+            System.out.println("No hay técnicos para técnicos");
         }
     }
 
@@ -254,8 +249,12 @@ public class MenuRRHH implements Menu{
     }
 
     private void listSpecialities(){
-        for (Speciality s: controllerSpeciality.getAllSpeciality()){
+        List<Speciality> specialities =controllerSpeciality.getAllSpeciality();
+        for (Speciality s: specialities){
             System.out.println(s);
+        }
+        if(specialities.size()==0){
+            System.out.println("No hay ninguna especialidad para mostrar");
         }
     }
 

@@ -24,7 +24,7 @@ public class TypeProblem {
     @OneToMany(mappedBy="typeProblem",fetch = FetchType.EAGER)
     private Set<SpecialityTypeProblem> specialities=new HashSet<>();
 
-
+    private boolean active=true;
     public TypeProblem() {
     }
 
@@ -36,6 +36,14 @@ public class TypeProblem {
 
     public long getId() {
         return id;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public double getMaxTime() {
