@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SpecialityController {
-    public void createSpeciality(String name){
+    public Speciality createSpeciality(String name){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Speciality.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -21,11 +21,12 @@ public class SpecialityController {
             session.getTransaction().commit();
             sessionFactory.close();
             System.out.println( "Correctamente creada la especialidad");
+            return speciality;
         }catch (Exception e){
             e.printStackTrace();
             System.out.println( "Error en la creacion de la especialidad");
         }
-
+        return null;
 
     }
 

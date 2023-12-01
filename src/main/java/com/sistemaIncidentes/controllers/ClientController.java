@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ClientController {
 
-    public void createClient(String businessName, String CUIT, String email){
+    public Client createClient(String businessName, String CUIT, String email){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -22,11 +22,12 @@ public class ClientController {
             session.getTransaction().commit();
             sessionFactory.close();
             System.out.println( "Cliente creado correctamente");
+            return client;
         }catch (Exception e){
             e.printStackTrace();
             System.out.println( "Error al intentar crear el cliente");
         }
-
+        return null;
 
     }
 

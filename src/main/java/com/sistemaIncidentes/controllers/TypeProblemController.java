@@ -11,21 +11,22 @@ import java.util.stream.Collectors;
 
 public class TypeProblemController {
 
-    public void createTypeProblem(){
+    public TypeProblem createTypeProblem(TypeProblem  typeProblem){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(TypeProblem.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
         try{
-            TypeProblem typeProblem=new TypeProblem();
             session.beginTransaction();
             session.persist(typeProblem);
             session.getTransaction().commit();
             sessionFactory.close();
             System.out.println( "Correctamente creado el tipo de problema");
+            return typeProblem;
         }catch (Exception e){
             e.printStackTrace();
             System.out.println( "Error en la creaciond el tipo de problema");
         }
+        return null;
 
 
     }

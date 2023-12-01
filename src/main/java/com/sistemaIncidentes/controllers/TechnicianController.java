@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TechnicianController {
-    public void createTechnician(Technician technician){
+    public Technician createTechnician(Technician technician){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Technician.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -20,11 +20,12 @@ public class TechnicianController {
             session.getTransaction().commit();
             sessionFactory.close();
             System.out.println( "Tecnico correctamente creado");
+            return technician;
         }catch (Exception e){
             e.printStackTrace();
             System.out.println( "Error en la creacion del tecnico");
         }
-
+        return null;
 
     }
 

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ServiceController {
 
-    public void createService(String name){
+    public Service createService(String name){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Service.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -22,10 +22,12 @@ public class ServiceController {
             session.getTransaction().commit();
             sessionFactory.close();
             System.out.println( "Correctamente creado el servicio");
+            return service;
         }catch (Exception e){
             e.printStackTrace();
             System.out.println( "Error en la eliminacion del servicio");
         }
+        return null;
 
 
     }
