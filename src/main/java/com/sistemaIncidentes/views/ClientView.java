@@ -66,8 +66,8 @@ public class ClientView {
         }while(!fin.equals("n"));
     }
 
-    public static void firstCreationExample(){
-        final ServiceController serviceController=new ServiceController();
+    public static void firstCreationExample() {
+        final ServiceController serviceController = new ServiceController();
         if(serviceController.getAllServiceAndRemoved().isEmpty()){
             //si esta tabla esta vacia es la primera vez que se ejecuta
             //crear objetos necesarios para la prueba del programa
@@ -118,6 +118,5 @@ public class ClientView {
 
         }
     }
-
 
 }

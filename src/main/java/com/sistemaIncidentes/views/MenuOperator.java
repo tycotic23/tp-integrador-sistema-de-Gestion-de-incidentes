@@ -153,6 +153,7 @@ public class MenuOperator implements Menu {
     }
 
     private boolean registerIncident(){
+        System.out.println("continuar...");
         scan.nextLine();
         //pedir datos del usuario (razon y cuit)
         System.out.print("Ingrese la razón social: ");

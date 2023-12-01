@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -67,6 +68,9 @@ public class Technician {
     }
 
     public int getIncidentsSolvedNumber(){
+        if(incidents.isEmpty()){
+            return 0;
+        }
         return this.incidents.stream().filter(Incident::isSolved).collect(Collectors.toSet()).size();
     }
 
@@ -136,7 +140,11 @@ public class Technician {
     }
 
     public double getAverage(){
-        double totalTime=getIncidents().stream().filter(Incident::isSolved).map(Incident::getTime).reduce(Double::sum).orElse(0.0);
+        if(getIncidents().isEmpty()){
+            return 0;
+        }
+        List<Incident> incidentList = getIncidents().stream().filter(Incident::isSolved).collect(Collectors.toList());
+        double totalTime=incidentList.stream().map(Incident::getTime).reduce(Double::sum).orElse(0.0);
         if(totalTime==0){
             return 0;
         }

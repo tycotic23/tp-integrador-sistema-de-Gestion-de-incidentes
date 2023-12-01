@@ -76,7 +76,7 @@ public class MenuRRHH implements Menu{
 
 
     private void getFasterTechnician(){
-        Technician fasterTechinician=technicianController.getAllTechnician().stream().min(Comparator.comparing(Technician::getAverage)).get();
+        Technician fasterTechinician=technicianController.getAllTechnician().stream().filter(t->!t.getIncidents().isEmpty()).min(Comparator.comparing(Technician::getAverage)).get();
         if(fasterTechinician!=null){
             System.out.println("El técnico con mejor promedio de tiempo al resolver incidentes es "+fasterTechinician);
         }
