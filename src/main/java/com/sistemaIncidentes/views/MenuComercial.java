@@ -57,6 +57,8 @@ public class MenuComercial implements Menu{
 
     private void addClient(){
         //pedir nuevos datos
+        System.out.println("Continuar...");
+        scan.nextLine();
         //razon social
         System.out.print("Razon social: ");
         String businessName=scan.nextLine();

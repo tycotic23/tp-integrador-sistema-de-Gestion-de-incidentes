@@ -26,6 +26,7 @@ public class Incident {
 
     private LocalDate date;
     private double time;
+    private String considerations;
 
     @OneToMany(mappedBy="incident",fetch = FetchType.EAGER)
     private Set<Problem> problems=new HashSet<>();
@@ -54,6 +55,13 @@ public class Incident {
         return id;
     }
 
+    public String getConsiderations() {
+        return considerations;
+    }
+
+    public void setConsiderations(String considerations) {
+        this.considerations = considerations;
+    }
 
     public boolean isActive() {
         return active;
@@ -140,6 +148,19 @@ public class Incident {
                 ", solved=" + solved +
                 ", date=" + date +
                 ", problems=" + problems +
+                '}';
+    }
+
+    public String report(){
+        StringBuilder msg= new StringBuilder();
+        for(Problem p:problems){
+            msg.append("\n").append(p.getTypeProblem()).append(" - ").append(p.getDescription()).append(" - ").append(p.getEstimatedTime());
+        }
+
+        return  "Incident{" +
+                "id=" + id +
+                ", Fecha de inicio=" + date +
+                ", problemas=" + msg +
                 '}';
     }
 }

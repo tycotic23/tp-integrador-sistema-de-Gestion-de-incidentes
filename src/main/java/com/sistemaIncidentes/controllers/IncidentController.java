@@ -70,7 +70,7 @@ public class IncidentController {
 
     }
 
-    public void closeIncident(long id){
+    public void closeIncident(long id,String considerations){
         SessionFactory sessionFactory=new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Incident.class).buildSessionFactory();
         Session session=sessionFactory.openSession();
 
@@ -78,6 +78,7 @@ public class IncidentController {
             session.beginTransaction();
             Incident incident = session.get(Incident.class,id);
             incident.setSolved(true);
+            incident.setConsiderations(considerations);
             session.persist(incident);
             session.getTransaction().commit();
             sessionFactory.close();

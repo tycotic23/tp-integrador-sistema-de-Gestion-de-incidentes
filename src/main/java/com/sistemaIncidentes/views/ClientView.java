@@ -1,13 +1,17 @@
 package com.sistemaIncidentes.views;
 
 
+import com.sistemaIncidentes.controllers.ServiceController;
+import com.sistemaIncidentes.models.MailSender;
+
 import java.util.Scanner;
 
 public class ClientView {
 
     public static void main(String[] args) {
 
-
+        //antes de crear el menu verifica si las tablas ya existen y tienen datos por defecto
+        //firstCreation();
         //menu
         Scanner scan = new Scanner (System.in);
         int option;
@@ -60,6 +64,18 @@ public class ClientView {
             } while (!fin.equals("s") && !fin.equals("n"));
             System.out.println();
         }while(!fin.equals("n"));
+    }
+
+    public static void firstCreation(){
+        final ServiceController serviceController=new ServiceController();
+        if(serviceController.getAllServiceAndRemoved().isEmpty()){
+            //si esta tabla esta vacia es la primera vez que se ejecuta
+            //crear objetos necesarios para la prueba del programa
+
+            //servicios
+            //tecnicos
+
+        }
     }
 
 

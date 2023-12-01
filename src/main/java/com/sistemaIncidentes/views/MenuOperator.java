@@ -15,6 +15,7 @@ public class MenuOperator implements Menu {
     private final ProblemController problemController = new ProblemController();
     private final TypeProblemController typeProblemController = new TypeProblemController();
     private final TechnicianController technicianController = new TechnicianController();
+    private final MailSender mailSender=new MailSender();
 
     private final Scanner scan = new Scanner (System.in);
     @Override
@@ -73,14 +74,34 @@ public class MenuOperator implements Menu {
 
     private void closeIncident(){
         int technicianId;
-        //pedir ide del tecnico
+        String considerations;
+        //pedir id del tecnico
         System.out.println("Ingrese el id del técnico ");
         technicianId=scan.nextInt();
+        //pedir consideraciones del tecnico ( si las hay)
+        System.out.println("Continuar... ");
+        scan.nextLine();
+        System.out.println("Consideraciones del técnico: ");
+        considerations=scan.nextLine();
         //modificar y persistir
-        Technician technician=technicianController.getTechnician(technicianId);
-        technicianController.setAvailableForId(technicianId,true);
-        incidentController.closeIncident(technician.getActiveIncident().getId());
-        System.out.println("cerrado con existo ");
+        try {
+            Technician technician = technicianController.getTechnician(technicianId);
+            technicianController.setAvailableForId(technicianId, true);
+            Incident incident=technician.getActiveIncident();
+            incidentController.closeIncident(incident.getId(),considerations);
+            System.out.println("Cerrado con éxito ");
+            //notificar al cliente a traves de su contacto brindado que su incidente ya fue cerrado
+            Client client=incident.getClient();
+            mailSender.sendEmail(client.getEmail(),
+                    "At. "+client.getBusinessName()+"- Incidente cerrado",
+                    "Se le informa que el incidente NRO "+incident.getId()+" ha sido cerrado satisfactoriamente por el técnico "+technician.getName()+"." +
+                            "\nA continuación se detallan consideraciones del técnico: "+considerations);
+            System.out.println( "Mail enviado");
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println( "Técnico no encontrado ");
+
+        }
     }
 
 
@@ -131,7 +152,8 @@ public class MenuOperator implements Menu {
         }
     }
 
-    private void registerIncident(){
+    private boolean registerIncident(){
+        scan.nextLine();
         //pedir datos del usuario (razon y cuit)
         System.out.print("Ingrese la razón social: ");
         String business=scan.nextLine();
@@ -144,6 +166,10 @@ public class MenuOperator implements Menu {
             Client client=clientController.getAllClient().stream()
                     .filter(c->c.getCUIT().equals(cuit)&&c.getBusinessName().equals(business))
                     .findFirst().orElse(null);
+            if(client==null){
+                System.out.println("Cliente no encontrado: ");
+                return false;
+            }
             System.out.println("Elija el id del servicio en cuestión: ");
             //listar los servicios
             listServices();
@@ -175,14 +201,17 @@ public class MenuOperator implements Menu {
             double time;
             boolean complex;
             String other;
+
             do{
+                System.out.println("Continuar...");
+                scan.nextLine();
                 System.out.print("Describa su problema: ");
                 problema=scan.nextLine();
                 System.out.println();
                 System.out.print("¿Tiempo estimado? Recuerde que el tiempo máximo es "+typeProblem.getMaxTime()+" :");
                 time= scan.nextDouble();
                 System.out.println();
-                System.out.print("Incerte complejidad: 0 =simple 1 =complejo ");
+                System.out.print("Inserte complejidad: 0 =simple 1 =complejo ");
                 complex=scan.nextInt()!=0;
                 System.out.println();
                 //persistir la especialidad y crear la relacion
@@ -194,14 +223,19 @@ public class MenuOperator implements Menu {
                     other=scan.next();
                 }while(!other.equals("s") && !other.equals("n"));
             }while(!other.equals("n"));
+            //informar tiempo estimado
             System.out.println("Incidente agregado con éxito ");
             System.out.println("La fecha de resolución estimada es "+ incident.getEstimatedDate());
+            //notificar al tecnico a traves de su contacto brindado
+            mailSender.sendEmail(technician.getEmail(), "Nuevo incidente "+incident.getId(),"Se le ha asignado un nuevo incidente. Datos del mismo: "+incident.report());
+            System.out.println("Notificado con éxito ");
         }
         catch(Exception e){
             e.printStackTrace();
             System.out.println( "Cliente no encontrado ");
+            return false;
         }
-
+        return true;
 
 
         //

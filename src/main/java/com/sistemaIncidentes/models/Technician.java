@@ -169,7 +169,7 @@ public class Technician {
             System.out.println("inicio="+i.getDate());
             System.out.println("fin="+i.getEstimatedDate());
             System.out.println("estado="+i.isSolved());
-
+            System.out.println();
 
         });
     }
